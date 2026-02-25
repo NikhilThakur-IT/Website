@@ -1,13 +1,43 @@
-import React, { useRef, useLayoutEffect } from 'react';
+import React, { useRef, useLayoutEffect, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CAL_LINK = 'https://cal.com/nik-thakur/quick-intro';
+const CAL_NAMESPACE = 'quick-intro';
+const CAL_LINK = 'nik-thakur/quick-intro';
 
 export default function BookCall() {
     const comp = useRef(null);
+
+    useEffect(() => {
+        // Initialise Cal.com embed overlay
+        (function (C, A, L) {
+            let p = function (a, ar) { a.q.push(ar); };
+            let d = C.document;
+            C.Cal = C.Cal || function () {
+                let cal = C.Cal; let ar = arguments;
+                if (!cal.loaded) {
+                    cal.ns = {}; cal.q = cal.q || [];
+                    d.head.appendChild(d.createElement('script')).src = A;
+                    cal.loaded = true;
+                }
+                if (ar[0] === L) {
+                    const api = function () { p(api, arguments); };
+                    const ns = ar[1]; api.q = [];
+                    if (typeof ns === 'string') {
+                        cal.ns[ns] = cal.ns[ns] || api;
+                        p(cal.ns[ns], ar); p(cal, [L, ns, api]);
+                    } else p(cal, ar);
+                    return;
+                }
+                p(cal, ar);
+            };
+        })(window, 'https://app.cal.com/embed/embed.js', 'init');
+
+        window.Cal('init', CAL_NAMESPACE, { origin: 'https://cal.com' });
+        window.Cal.ns[CAL_NAMESPACE]('ui', { hideEventTypeDetails: false, layout: 'month_view' });
+    }, []);
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -52,14 +82,14 @@ export default function BookCall() {
                 </p>
 
                 <div className="book-content flex flex-col items-center gap-4 mt-4">
-                    <a
-                        href={CAL_LINK}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <button
+                        data-cal-namespace={CAL_NAMESPACE}
+                        data-cal-link={CAL_LINK}
+                        data-cal-config='{"layout":"month_view"}'
                         className="btn-magnetic bg-champagne text-obsidian px-10 py-5 rounded-full font-inter font-semibold tracking-wide text-base shadow-[0_0_40px_rgba(201,168,76,0.15)] hover:shadow-[0_0_60px_rgba(201,168,76,0.3)] transition-shadow"
                     >
                         <span>Book a Free Intro Call</span>
-                    </a>
+                    </button>
                     <span className="font-mono text-xs text-ivory/20 uppercase tracking-widest">
                         Powered by Cal.com
                     </span>
