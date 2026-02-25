@@ -6,6 +6,7 @@ import Philosophy from './components/Philosophy';
 import Protocol from './components/Protocol';
 import Pricing from './components/Pricing';
 import Testimonials from './components/Testimonials';
+import BookCall from './components/BookCall';
 import Footer from './components/Footer';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Testimonials />
       <Features />
       <Philosophy />
+      <BookCall />
       {/* <Protocol /> */}
       <Pricing />
       <Footer />

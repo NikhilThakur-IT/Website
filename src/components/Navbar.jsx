@@ -37,9 +37,9 @@ export default function Navbar() {
                     <a href="#protocol" className="hover:-translate-y-[1px] transition-transform duration-300">Protocol</a>
                 </div>
 
-                <button className="btn-magnetic bg-champagne text-obsidian px-5 py-2 rounded-full text-sm font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] transition-all">
+                <a href="#join-club" className="btn-magnetic bg-champagne text-obsidian px-5 py-2 rounded-full text-sm font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] transition-all">
                     <span>Join the Club</span>
-                </button>
+                </a>
             </div>
         </nav>
     );
