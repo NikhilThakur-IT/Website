@@ -10,30 +10,35 @@ const testimonials = [
         name: "Priya M.",
         role: "Product Manager · Fintech",
         detail: "Member since Jan 2025",
+        avatar: "https://randomuser.me/api/portraits/women/44.jpg",
     },
     {
         quote: "Landed my first $12k automation client three weeks after joining. I'm not even going to pretend I knew what I was doing — I basically reverse-engineered a workflow from a thread in the community and pitched it. Nobody told me it was that simple to just start.",
         name: "James R.",
         role: "Freelance Developer",
         detail: "Member since Nov 2024",
+        avatar: "https://randomuser.me/api/portraits/men/32.jpg",
     },
     {
         quote: "I almost spent $800 on a tool that someone here talked me out of in about four messages. The community isn't just motivational fluff. People will tell you when you're wrong, and that's honestly rarer than it sounds.",
         name: "Sarah K.",
         role: "Marketing Director · SaaS",
         detail: "Member since Feb 2025",
+        avatar: "https://randomuser.me/api/portraits/women/68.jpg",
     },
     {
         quote: "Took me longer than I expected to transition out of teaching — about eight months, not three. But I'm now consulting on AI curriculum for two schools and making more than I ever did in a classroom. Still check the digest every Monday without fail.",
         name: "Daniel O.",
         role: "AI Curriculum Consultant",
         detail: "Member since Aug 2024",
+        avatar: "https://randomuser.me/api/portraits/men/75.jpg",
     },
     {
         quote: "The prompting guide alone was worth it. Not the 'act as a CEO' stuff — actual structured prompting for engineering workflows. I sent it to my whole team. We cut sprint planning from three hours to forty minutes.",
         name: "Marcus T.",
         role: "Senior Software Engineer",
         detail: "Member since Mar 2025",
+        avatar: "https://randomuser.me/api/portraits/men/46.jpg",
     },
 ];
 
@@ -194,13 +199,20 @@ export default function Testimonials() {
                                 </blockquote>
 
                                 <footer className="mt-8 pt-6 border-t border-white/[0.07] flex items-center justify-between gap-4">
-                                    <div>
-                                        <p className="font-inter font-semibold text-ivory text-sm tracking-tight">
-                                            {t.name}
-                                        </p>
-                                        <p className="font-mono text-[0.65rem] text-champagne/60 uppercase tracking-widest mt-0.5">
-                                            {t.role}
-                                        </p>
+                                    <div className="flex items-center gap-3">
+                                        <img
+                                            src={t.avatar}
+                                            alt={t.name}
+                                            className="w-10 h-10 rounded-full object-cover ring-2 ring-white/10 shrink-0"
+                                        />
+                                        <div>
+                                            <p className="font-inter font-semibold text-ivory text-sm tracking-tight">
+                                                {t.name}
+                                            </p>
+                                            <p className="font-mono text-[0.65rem] text-champagne/60 uppercase tracking-widest mt-0.5">
+                                                {t.role}
+                                            </p>
+                                        </div>
                                     </div>
                                     <span className="font-mono text-[0.6rem] text-ivory/20 uppercase tracking-wide whitespace-nowrap">
                                         {t.detail}
