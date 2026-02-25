@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-ivory text-slate font-inter antialiased overflow-x-hidden;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Micro-interactions & Magnetic Buttons */
+.btn-magnetic {
+  @apply relative overflow-hidden inline-flex items-center justify-center transition-transform duration-300 ease-out;
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-magnetic:hover {
+  transform: scale(1.03);
+}
+
+.btn-magnetic::before {
+  content: '';
+  @apply absolute inset-0 bg-white/10 translate-y-[100%] transition-transform duration-300 ease-out z-0;
+}
+
+.btn-magnetic:hover::before {
+  @apply translate-y-0;
+}
+
+.btn-magnetic > * {
+  @apply relative z-10;
+}
+
+/* Base custom styles */
+.gradient-overlay {
+  background: linear-gradient(to top, theme('colors.obsidian') 0%, theme('colors.obsidian') 10%, transparent 100%);
+}
