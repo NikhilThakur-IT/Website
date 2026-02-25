@@ -13,11 +13,11 @@ function App() {
     <div className="min-h-screen bg-ivory text-slate selection:bg-champagne/30 overflow-x-hidden">
       <Navbar />
       <Hero />
+      <Testimonials />
       <Features />
       <Philosophy />
       <Protocol />
       <Pricing />
-      <Testimonials />
       <Footer />
     </div>
   );
