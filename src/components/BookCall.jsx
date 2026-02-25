@@ -4,8 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const CAL_NAMESPACE = 'quick-intro';
-const CAL_LINK = 'nik-thakur/quick-intro';
+const CAL_NAMESPACE = 'booking';
+const CAL_LINK = 'nik-thakur';
 
 export default function BookCall() {
     const comp = useRef(null);
@@ -36,7 +36,7 @@ export default function BookCall() {
         })(window, 'https://app.cal.com/embed/embed.js', 'init');
 
         window.Cal('init', CAL_NAMESPACE, { origin: 'https://cal.com' });
-        window.Cal.ns[CAL_NAMESPACE]('ui', { hideEventTypeDetails: false, layout: 'month_view' });
+        window.Cal.ns[CAL_NAMESPACE]('ui', { hideEventTypeDetails: false });
     }, []);
 
     useLayoutEffect(() => {
@@ -85,10 +85,10 @@ export default function BookCall() {
                     <button
                         data-cal-namespace={CAL_NAMESPACE}
                         data-cal-link={CAL_LINK}
-                        data-cal-config='{"layout":"month_view"}'
+                        data-cal-config='{}'
                         className="btn-magnetic bg-champagne text-obsidian px-10 py-5 rounded-full font-inter font-semibold tracking-wide text-base shadow-[0_0_40px_rgba(201,168,76,0.15)] hover:shadow-[0_0_60px_rgba(201,168,76,0.3)] transition-shadow"
                     >
-                        <span>Book a Free Intro Call</span>
+                        <span>Book a Session</span>
                     </button>
                     <span className="font-mono text-xs text-ivory/20 uppercase tracking-widest">
                         Powered by Cal.com
