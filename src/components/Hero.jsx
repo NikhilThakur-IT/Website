@@ -31,12 +31,10 @@ export default function Hero() {
     return (
         <section ref={comp} className="relative h-[100dvh] w-full overflow-hidden flex items-center justify-center">
             {/* Background Image */}
-            <div className="absolute inset-0 z-0">
-                <img
-                    src="https://images.unsplash.com/photo-1620825937374-87fc7d62828e?q=80&w=2000&auto=format&fit=crop"
-                    alt=""
-                    className="w-full h-full object-cover"
-                />
+            <div
+                className="absolute inset-0 z-0 bg-center bg-cover"
+                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1620825937374-87fc7d62828e?q=80&w=2000&auto=format&fit=crop')" }}
+            >
                 {/* Heavy Primary-to-Black Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-obsidian/60 via-obsidian/80 to-obsidian"></div>
                 <div className="absolute inset-0 bg-obsidian/40"></div>
