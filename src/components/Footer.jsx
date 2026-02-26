@@ -31,8 +31,8 @@ export default function Footer() {
                     <div className="flex gap-16 md:gap-24 font-inter text-sm">
                         <div className="flex flex-col gap-4">
                             <h4 className="font-bold text-ivory mb-2 tracking-wider">PLATFORM</h4>
-                            <a href="#features" className="hover:text-champagne transition-colors">Features</a>
-                            <a href="#protocol" className="hover:text-champagne transition-colors">Protocol</a>
+                            <a href="#features" className="hover:text-champagne transition-colors">Why Join US?</a>
+                            <a href="#protocol" className="hover:text-champagne transition-colors">Let's Talk!</a>
                             <a href="#pricing" className="hover:text-champagne transition-colors">Membership</a>
                         </div>
 

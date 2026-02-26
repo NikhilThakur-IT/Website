@@ -65,6 +65,35 @@ export default function Hero() {
                         <span className="text-ivory/50 font-mono text-sm uppercase tracking-widest hidden md:inline-block">
                             Get Free Access Today
                         </span>
+
+                        {/* Social proof */}
+                        <div className="flex items-center gap-3">
+                            {/* Overlapping avatars */}
+                            <div className="flex -space-x-3">
+                                {[
+                                    "https://randomuser.me/api/portraits/women/44.jpg",
+                                    "https://randomuser.me/api/portraits/men/32.jpg",
+                                    "https://randomuser.me/api/portraits/women/68.jpg",
+                                    "https://randomuser.me/api/portraits/men/75.jpg",
+                                    "https://randomuser.me/api/portraits/men/46.jpg",
+                                ].map((src, i) => (
+                                    <img
+                                        key={i}
+                                        src={src}
+                                        alt=""
+                                        className="w-9 h-9 rounded-full border-2 border-obsidian object-cover"
+                                    />
+                                ))}
+                            </div>
+                            {/* Rating + label */}
+                            <div className="flex flex-col items-start leading-tight">
+                                <div className="flex items-center gap-1">
+                                    <span className="text-champagne text-sm tracking-tight">★★★★★</span>
+                                    <span className="text-ivory/80 font-mono text-xs">5.0</span>
+                                </div>
+                                <span className="text-ivory/50 font-mono text-xs tracking-wide">Join 1,000+ others</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
