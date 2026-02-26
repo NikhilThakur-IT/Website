@@ -141,7 +141,7 @@ export default function FormPage() {
                             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                                 {/* Interest selector */}
                                 <div className="form-el">
-                                    <label className="block font-mono text-xs tracking-widest text-champagne/40 uppercase mb-3">
+                                    <label className="block font-inter font-semibold text-sm text-ivory mb-3">
                                         I'm here to
                                     </label>
                                     <div className="grid grid-cols-1 gap-3">
@@ -169,7 +169,7 @@ export default function FormPage() {
                                                     onChange={handleChange}
                                                     className="sr-only"
                                                 />
-                                                <span className="font-inter text-sm text-ivory/70">
+                                                <span className="font-inter text-sm text-ivory">
                                                     {opt.label}
                                                 </span>
                                             </label>
@@ -179,7 +179,7 @@ export default function FormPage() {
 
                                 {/* Name */}
                                 <div className="form-el">
-                                    <label className="block font-mono text-xs tracking-widest text-champagne/40 uppercase mb-2">
+                                    <label className="block font-inter font-semibold text-sm text-ivory mb-2">
                                         Full Name
                                     </label>
                                     <input
@@ -189,13 +189,13 @@ export default function FormPage() {
                                         onChange={handleChange}
                                         required
                                         placeholder="Jane Smith"
-                                        className="w-full bg-white/4 border border-white/8 rounded-xl px-5 py-4 font-inter text-sm text-ivory placeholder:text-ivory/20 focus:outline-none focus:border-champagne/50 transition-colors"
+                                        className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none focus:border-champagne transition-colors"
                                     />
                                 </div>
 
                                 {/* Email */}
                                 <div className="form-el">
-                                    <label className="block font-mono text-xs tracking-widest text-champagne/40 uppercase mb-2">
+                                    <label className="block font-inter font-semibold text-sm text-ivory mb-2">
                                         Email
                                     </label>
                                     <input
@@ -205,13 +205,13 @@ export default function FormPage() {
                                         onChange={handleChange}
                                         required
                                         placeholder="jane@company.com"
-                                        className="w-full bg-white/4 border border-white/8 rounded-xl px-5 py-4 font-inter text-sm text-ivory placeholder:text-ivory/20 focus:outline-none focus:border-champagne/50 transition-colors"
+                                        className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none focus:border-champagne transition-colors"
                                     />
                                 </div>
 
                                 {/* Role / Company */}
                                 <div className="form-el">
-                                    <label className="block font-mono text-xs tracking-widest text-champagne/40 uppercase mb-2">
+                                    <label className="block font-inter font-semibold text-sm text-ivory mb-2">
                                         {isWaitlist ? "Current Role" : "Company & Role"}
                                     </label>
                                     <input
@@ -221,13 +221,13 @@ export default function FormPage() {
                                         onChange={handleChange}
                                         required
                                         placeholder={isWaitlist ? "e.g. Software Engineer at Acme" : "e.g. Head of L&D at Acme Corp"}
-                                        className="w-full bg-white/4 border border-white/8 rounded-xl px-5 py-4 font-inter text-sm text-ivory placeholder:text-ivory/20 focus:outline-none focus:border-champagne/50 transition-colors"
+                                        className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none focus:border-champagne transition-colors"
                                     />
                                 </div>
 
                                 {/* Message */}
                                 <div className="form-el">
-                                    <label className="block font-mono text-xs tracking-widest text-champagne/40 uppercase mb-2">
+                                    <label className="block font-inter font-semibold text-sm text-ivory mb-2">
                                         {isWaitlist ? "What do you want to build?" : "Tell us about your team"}
                                     </label>
                                     <textarea
@@ -238,7 +238,7 @@ export default function FormPage() {
                                         placeholder={isWaitlist
                                             ? "Share the project, skill, or outcome you're working toward…"
                                             : "Team size, current challenges, what success looks like for you…"}
-                                        className="w-full bg-white/4 border border-white/8 rounded-xl px-5 py-4 font-inter text-sm text-ivory placeholder:text-ivory/20 focus:outline-none focus:border-champagne/50 transition-colors resize-none"
+                                        className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none focus:border-champagne transition-colors resize-none"
                                     />
                                 </div>
 
