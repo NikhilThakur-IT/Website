@@ -32,9 +32,9 @@ export default function Navbar() {
                 </div>
 
                 <div className="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
-                    <a href="#features" className="hover:-translate-y-[1px] transition-transform duration-300">Features</a>
-                    <a href="#philosophy" className="hover:-translate-y-[1px] transition-transform duration-300">Philosophy</a>
-                    <a href="#protocol" className="hover:-translate-y-[1px] transition-transform duration-300">Protocol</a>
+                    <a href="#features" className="hover:-translate-y-[1px] transition-transform duration-300">Why Join?</a>
+                    <a href="#philosophy" className="hover:-translate-y-[1px] transition-transform duration-300">Let's Talk!</a>
+                    <a href="#protocol" className="hover:-translate-y-[1px] transition-transform duration-300">Membership</a>
                 </div>
 
                 <a href="#join-club" className="btn-magnetic bg-champagne text-obsidian px-5 py-2 rounded-full text-sm font-semibold tracking-wide hover:shadow-[0_0_20px_rgba(201,168,76,0.3)] transition-all">
