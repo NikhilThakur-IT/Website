@@ -86,10 +86,10 @@ export default function FormPage() {
             }}
         >
             {/* Back nav */}
-            <div className="form-el px-6 md:px-12 pt-8">
+            <div className="form-el fixed top-5 left-5 z-50">
                 <button
                     onClick={() => navigate("/")}
-                    className="inline-flex items-center gap-2 font-mono text-xs tracking-widest text-champagne/50 uppercase hover:text-champagne transition-colors"
+                    className="inline-flex items-center gap-2 font-mono text-xs tracking-widest text-champagne/50 uppercase hover:text-champagne transition-colors bg-obsidian/60 backdrop-blur-md px-4 py-2 rounded-full border border-white/8"
                 >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M19 12H5M12 5l-7 7 7 7" />
