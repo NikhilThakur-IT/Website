@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const tiers = [
     {
@@ -8,7 +9,8 @@ const tiers = [
         description: "Intensive 4-week structured AI engineering sprints.",
         features: ["Project-based curriculum", "1:1 Architecture reviews", "Portfolio engineering", "Priority networking"],
         primary: false,
-        cta: "Join the Waiting List"
+        cta: "Join the Waiting List",
+        href: "/apply?type=waitlist"
     },
     {
         name: "Community",
@@ -27,7 +29,8 @@ const tiers = [
         description: "Private workshops designed for organizational transformation.",
         features: ["Custom tailored curriculum", "On-site delivery", "Executive alignment", "Dedicated cohort lead"],
         primary: false,
-        cta: "Contact Partners"
+        cta: "Contact Partners",
+        href: "/apply?type=partners"
     }
 ];
 
@@ -87,7 +90,7 @@ export default function Pricing() {
                                 ))}
                             </ul>
 
-                            {tier.href ? (
+                            {tier.href?.startsWith('#') ? (
                                 <a href={tier.href} className={`btn-magnetic w-full flex items-center justify-center py-4 rounded-full font-bold tracking-wide text-sm transition-all ${tier.primary
                                     ? 'bg-champagne text-obsidian shadow-[0_0_20px_rgba(201,168,76,0.2)]'
                                     : 'bg-obsidian/5 text-obsidian hover:bg-obsidian hover:text-ivory'
@@ -95,12 +98,12 @@ export default function Pricing() {
                                     <span>{tier.cta}</span>
                                 </a>
                             ) : (
-                                <button className={`btn-magnetic w-full py-4 rounded-full font-bold tracking-wide text-sm transition-all ${tier.primary
+                                <Link to={tier.href} className={`btn-magnetic w-full flex items-center justify-center py-4 rounded-full font-bold tracking-wide text-sm transition-all ${tier.primary
                                     ? 'bg-champagne text-obsidian shadow-[0_0_20px_rgba(201,168,76,0.2)]'
                                     : 'bg-obsidian/5 text-obsidian hover:bg-obsidian hover:text-ivory'
                                     }`}>
                                     <span>{tier.cta}</span>
-                                </button>
+                                </Link>
                             )}
                         </div>
                     ))}
