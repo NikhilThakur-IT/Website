@@ -89,9 +89,9 @@ export default function Hero() {
                             <div className="flex flex-col items-start leading-tight">
                                 <div className="flex items-center gap-1">
                                     <span className="text-champagne text-sm tracking-tight">★★★★★</span>
-                                    <span className="text-ivory/80 font-mono text-xs">5.0</span>
+                                    <span className="text-ivory/80 font-mono text-xs">4.8</span>
                                 </div>
-                                <span className="text-ivory/50 font-mono text-xs tracking-wide">Join 1,000+ others</span>
+                                <span className="text-ivory/50 font-mono text-xs tracking-wide">Join 65+ others</span>
                             </div>
                         </div>
                     </div>
