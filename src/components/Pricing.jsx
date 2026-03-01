@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const tiers = [
@@ -109,7 +109,81 @@ export default function Pricing() {
                     ))}
                 </div>
 
+                {/* FAQ */}
+                <FAQ />
+
             </div>
         </section>
+    );
+}
+
+const faqs = [
+    {
+        q: "How long is each workshop?",
+        a: "Each Performance Workshop runs for 4 weeks. You'll work through a structured sprint with live sessions, async projects, and 1:1 architecture reviews."
+    },
+    {
+        q: "What's the cohort size?",
+        a: "We keep cohorts small — typically 12 to 15 people — so every member gets direct feedback and meaningful peer collaboration."
+    },
+    {
+        q: "Can I cancel or get a refund?",
+        a: "Yes. If a workshop isn't the right fit, you can request a full refund within the first 7 days of the cohort start date — no questions asked."
+    },
+    {
+        q: "Is the Community tier really free?",
+        a: "Completely free, forever. You get access to the Skool community, our weekly AI digest, and invitations to community events."
+    },
+    {
+        q: "Can I take multiple workshops?",
+        a: "Absolutely. Each workshop covers a different domain — many members return for two or three to build a broader AI skill set."
+    },
+    {
+        q: "What does Enterprise pricing look like?",
+        a: "It depends on team size, delivery format, and curriculum scope. Reach out through the partnership form and we'll put together a tailored proposal within a few days."
+    },
+];
+
+function FAQ() {
+    const [open, setOpen] = useState(null);
+
+    return (
+        <div className="mt-24 max-w-2xl mx-auto">
+            <h3 className="text-center font-inter font-bold text-2xl md:text-3xl tracking-tight text-obsidian mb-10">
+                Frequently Asked Questions
+            </h3>
+            <div className="flex flex-col divide-y divide-obsidian/8">
+                {faqs.map((faq, i) => {
+                    const isOpen = open === i;
+                    return (
+                        <button
+                            key={i}
+                            onClick={() => setOpen(isOpen ? null : i)}
+                            className="text-left py-5 group"
+                            aria-expanded={isOpen}
+                        >
+                            <div className="flex items-center justify-between gap-4">
+                                <span className="font-inter font-semibold text-sm md:text-base text-obsidian">
+                                    {faq.q}
+                                </span>
+                                <svg
+                                    className={`w-5 h-5 shrink-0 text-obsidian/40 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14M5 12h14" />
+                                </svg>
+                            </div>
+                            <div
+                                className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-40 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}
+                            >
+                                <p className="font-inter text-sm text-slate/70 leading-relaxed pr-8">
+                                    {faq.a}
+                                </p>
+                            </div>
+                        </button>
+                    );
+                })}
+            </div>
+        </div>
     );
 }
