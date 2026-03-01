@@ -3,8 +3,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 
 // ─── Formspree ────────────────────────────────────────────────────────────────
-// 1. Go to https://formspree.io → New Form → copy your endpoint ID
-// 2. Replace "YOUR_FORM_ID" below with it (e.g. "xpwzgkqr")
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mzdaogwo";
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -12,6 +10,41 @@ const INTEREST_OPTIONS = [
     { value: "waitlist", label: "Join the Performance Workshop waitlist" },
     { value: "partners", label: "Explore an Enterprise Partnership" },
 ];
+
+// Rate limiting: max 3 submissions per hour stored in localStorage
+const RATE_LIMIT_KEY = "oai_form_submissions";
+const RATE_LIMIT_MAX = 3;
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
+
+function checkRateLimit() {
+    try {
+        const raw = localStorage.getItem(RATE_LIMIT_KEY);
+        const timestamps = raw ? JSON.parse(raw) : [];
+        const now = Date.now();
+        const recent = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+        if (recent.length >= RATE_LIMIT_MAX) return false;
+        recent.push(now);
+        localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(recent));
+        return true;
+    } catch {
+        return true; // fail open if localStorage is unavailable
+    }
+}
+
+function validateForm(form) {
+    const errors = {};
+    if (!form.name.trim() || form.name.trim().length < 2) {
+        errors.name = "Please enter your full name.";
+    }
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!form.email.trim() || !emailRe.test(form.email.trim())) {
+        errors.email = "Please enter a valid email address.";
+    }
+    if (!form.role.trim() || form.role.trim().length < 2) {
+        errors.role = "Please enter your role.";
+    }
+    return errors;
+}
 
 export default function FormPage() {
     const [searchParams] = useSearchParams();
@@ -26,8 +59,10 @@ export default function FormPage() {
         interest: initialInterest,
         role: "",
         message: "",
+        website: "", // honeypot field — must stay empty
     });
-    const [status, setStatus] = useState("idle"); // idle | loading | success | error
+    const [errors, setErrors] = useState({});
+    const [status, setStatus] = useState("idle"); // idle | loading | success | error | ratelimit
 
     useLayoutEffect(() => {
         const ctx = gsap.context(() => {
@@ -43,11 +78,35 @@ export default function FormPage() {
     }, []);
 
     function handleChange(e) {
-        setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+        const { name, value } = e.target;
+        setForm((prev) => ({ ...prev, [name]: value }));
+        if (errors[name]) {
+            setErrors((prev) => ({ ...prev, [name]: undefined }));
+        }
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
+
+        // Honeypot — bots fill this hidden field; silently fake success
+        if (form.website) {
+            setStatus("success");
+            return;
+        }
+
+        // Client-side validation
+        const validationErrors = validateForm(form);
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
+        // Rate limit check
+        if (!checkRateLimit()) {
+            setStatus("ratelimit");
+            return;
+        }
+
         setStatus("loading");
 
         try {
@@ -138,7 +197,22 @@ export default function FormPage() {
                                 </p>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+
+                                {/* Honeypot — off-screen, invisible to real users, attracts bots */}
+                                <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", height: 0, overflow: "hidden", opacity: 0 }}>
+                                    <label htmlFor="hp_website">Website</label>
+                                    <input
+                                        type="text"
+                                        id="hp_website"
+                                        name="website"
+                                        value={form.website}
+                                        onChange={handleChange}
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                    />
+                                </div>
+
                                 {/* Interest selector */}
                                 <div className="form-el">
                                     <label className="block font-inter font-semibold text-sm text-ivory mb-3">
@@ -187,10 +261,14 @@ export default function FormPage() {
                                         name="name"
                                         value={form.name}
                                         onChange={handleChange}
-                                        required
                                         placeholder="Jane Smith"
-                                        className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none focus:border-champagne transition-colors"
+                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none transition-colors ${
+                                            errors.name ? "border-red-400" : "border-white/20 focus:border-champagne"
+                                        }`}
                                     />
+                                    {errors.name && (
+                                        <p className="mt-1.5 font-mono text-xs text-red-400/80">{errors.name}</p>
+                                    )}
                                 </div>
 
                                 {/* Email */}
@@ -203,10 +281,14 @@ export default function FormPage() {
                                         name="email"
                                         value={form.email}
                                         onChange={handleChange}
-                                        required
                                         placeholder="jane@company.com"
-                                        className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none focus:border-champagne transition-colors"
+                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none transition-colors ${
+                                            errors.email ? "border-red-400" : "border-white/20 focus:border-champagne"
+                                        }`}
                                     />
+                                    {errors.email && (
+                                        <p className="mt-1.5 font-mono text-xs text-red-400/80">{errors.email}</p>
+                                    )}
                                 </div>
 
                                 {/* Role / Company */}
@@ -219,10 +301,14 @@ export default function FormPage() {
                                         name="role"
                                         value={form.role}
                                         onChange={handleChange}
-                                        required
                                         placeholder={isWaitlist ? "e.g. Software Engineer at Acme" : "e.g. Head of L&D at Acme Corp"}
-                                        className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none focus:border-champagne transition-colors"
+                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none transition-colors ${
+                                            errors.role ? "border-red-400" : "border-white/20 focus:border-champagne"
+                                        }`}
                                     />
+                                    {errors.role && (
+                                        <p className="mt-1.5 font-mono text-xs text-red-400/80">{errors.role}</p>
+                                    )}
                                 </div>
 
                                 {/* Message */}
@@ -242,10 +328,15 @@ export default function FormPage() {
                                     />
                                 </div>
 
-                                {/* Error message */}
+                                {/* Status messages */}
                                 {status === "error" && (
                                     <p className="font-mono text-xs text-red-400/80 tracking-wide">
                                         Something went wrong. Please try again or email us directly.
+                                    </p>
+                                )}
+                                {status === "ratelimit" && (
+                                    <p className="font-mono text-xs text-red-400/80 tracking-wide">
+                                        Too many submissions. Please wait an hour before trying again.
                                     </p>
                                 )}
 
