@@ -162,37 +162,37 @@ export default function FormPage() {
 
                     {status === "success" ? (
                         <div className="text-center flex flex-col items-center gap-6">
-                            <div className="w-16 h-16 rounded-full bg-champagne/10 border border-champagne/30 flex items-center justify-center">
-                                <svg className="w-7 h-7 text-champagne" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <div className="w-20 h-20 rounded-full bg-champagne/20 border-2 border-champagne flex items-center justify-center shadow-[0_0_30px_rgba(201,168,76,0.25)]">
+                                <svg className="w-9 h-9 text-champagne" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
-                            <h2 className="font-playfair italic text-5xl text-ivory">We got you.</h2>
-                            <p className="font-inter text-ivory/50 text-base max-w-sm leading-relaxed">
+                            <h2 className="font-playfair italic text-5xl md:text-6xl text-champagne font-semibold">We got you.</h2>
+                            <p className="font-inter text-ivory/70 text-base md:text-lg max-w-sm leading-relaxed">
                                 {isWaitlist
                                     ? "You're on the list. We'll reach out when the next cohort opens."
                                     : "Thanks for reaching out. Our partnerships team will be in touch shortly."}
                             </p>
 
                             {/* Next steps */}
-                            <div className="w-full max-w-sm mt-2 border border-white/8 rounded-2xl bg-white/3 p-6 text-left flex flex-col gap-4">
-                                <p className="font-mono text-xs tracking-widest text-champagne/50 uppercase">What happens next</p>
+                            <div className="w-full max-w-sm mt-2 border border-champagne/20 rounded-2xl bg-champagne/5 p-6 text-left flex flex-col gap-4">
+                                <p className="font-mono text-xs font-bold tracking-widest text-champagne uppercase">What happens next</p>
                                 <div className="flex flex-col gap-3">
                                     <div className="flex items-start gap-3">
-                                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-champagne/10 font-mono text-[10px] text-champagne">1</span>
-                                        <p className="font-inter text-sm text-ivory/60">A confirmation email is on its way to your inbox.</p>
+                                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-champagne/20 font-mono text-[11px] font-bold text-champagne">1</span>
+                                        <p className="font-inter text-sm text-ivory/80">A confirmation email is on its way to your inbox.</p>
                                     </div>
                                     <div className="flex items-start gap-3">
-                                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-champagne/10 font-mono text-[10px] text-champagne">2</span>
-                                        <p className="font-inter text-sm text-ivory/60">
+                                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-champagne/20 font-mono text-[11px] font-bold text-champagne">2</span>
+                                        <p className="font-inter text-sm text-ivory/80">
                                             {isWaitlist
                                                 ? "Our team will review your application within 48 hours."
                                                 : "A partnerships lead will personally reach out within 24 hours."}
                                         </p>
                                     </div>
                                     <div className="flex items-start gap-3">
-                                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-champagne/10 font-mono text-[10px] text-champagne">3</span>
-                                        <p className="font-inter text-sm text-ivory/60">
+                                        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-champagne/20 font-mono text-[11px] font-bold text-champagne">3</span>
+                                        <p className="font-inter text-sm text-ivory/80">
                                             {isWaitlist
                                                 ? "If selected, you'll get onboarding details and community access."
                                                 : "We'll schedule a discovery call tailored to your team's needs."}
@@ -203,7 +203,7 @@ export default function FormPage() {
 
                             <button
                                 onClick={() => navigate("/")}
-                                className="btn-magnetic mt-2 bg-champagne/10 border border-champagne/30 text-champagne px-8 py-3 rounded-full font-inter font-semibold text-sm tracking-wide hover:bg-champagne hover:text-obsidian transition-colors"
+                                className="btn-magnetic mt-2 bg-champagne text-obsidian px-8 py-3 rounded-full font-inter font-bold text-sm tracking-wide shadow-[0_0_30px_rgba(201,168,76,0.25)] hover:shadow-[0_0_50px_rgba(201,168,76,0.4)] transition-all"
                             >
                                 <span>Back to Home</span>
                             </button>
@@ -212,13 +212,13 @@ export default function FormPage() {
                         <>
                             {/* Header */}
                             <div className="form-el mb-10">
-                                <p className="font-mono text-xs tracking-widest text-champagne/50 uppercase mb-4">
+                                <p className="font-mono text-xs font-bold tracking-widest text-champagne uppercase mb-4">
                                     — Get in touch
                                 </p>
-                                <h1 className="font-playfair italic font-medium text-5xl md:text-6xl text-ivory leading-tight mb-3">
+                                <h1 className="font-playfair italic font-semibold text-5xl md:text-6xl text-ivory leading-tight mb-3">
                                     {isWaitlist ? "Reserve your seat." : "Let's build together."}
                                 </h1>
-                                <p className="font-inter text-ivory/40 text-base leading-relaxed">
+                                <p className="font-inter text-ivory/60 text-base leading-relaxed">
                                     {isWaitlist
                                         ? "Spots are limited. Tell us a little about where you're headed."
                                         : "Serious about transformation at scale? Let's talk."}
@@ -243,7 +243,7 @@ export default function FormPage() {
 
                                 {/* Interest selector */}
                                 <div className="form-el">
-                                    <label className="block font-inter font-semibold text-sm text-ivory mb-3">
+                                    <label className="block font-inter font-bold text-sm text-ivory mb-3">
                                         I'm here to
                                     </label>
                                     <div className="grid grid-cols-1 gap-3">
@@ -281,7 +281,7 @@ export default function FormPage() {
 
                                 {/* Name */}
                                 <div className="form-el">
-                                    <label className="block font-inter font-semibold text-sm text-ivory mb-2">
+                                    <label className="block font-inter font-bold text-sm text-ivory mb-2">
                                         Full Name
                                     </label>
                                     <input
@@ -290,7 +290,7 @@ export default function FormPage() {
                                         value={form.name}
                                         onChange={handleChange}
                                         placeholder="Jane Smith"
-                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none transition-colors ${
+                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${
                                             errors.name ? "border-red-400" : "border-white/20 focus:border-champagne"
                                         }`}
                                     />
@@ -301,7 +301,7 @@ export default function FormPage() {
 
                                 {/* Email */}
                                 <div className="form-el">
-                                    <label className="block font-inter font-semibold text-sm text-ivory mb-2">
+                                    <label className="block font-inter font-bold text-sm text-ivory mb-2">
                                         Email
                                     </label>
                                     <input
@@ -310,7 +310,7 @@ export default function FormPage() {
                                         value={form.email}
                                         onChange={handleChange}
                                         placeholder="jane@company.com"
-                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none transition-colors ${
+                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${
                                             errors.email ? "border-red-400" : "border-white/20 focus:border-champagne"
                                         }`}
                                     />
@@ -321,7 +321,7 @@ export default function FormPage() {
 
                                 {/* Role / Company */}
                                 <div className="form-el">
-                                    <label className="block font-inter font-semibold text-sm text-ivory mb-2">
+                                    <label className="block font-inter font-bold text-sm text-ivory mb-2">
                                         {isWaitlist ? "Current Role" : "Company & Role"}
                                     </label>
                                     <input
@@ -330,7 +330,7 @@ export default function FormPage() {
                                         value={form.role}
                                         onChange={handleChange}
                                         placeholder={isWaitlist ? "e.g. Software Engineer at Acme" : "e.g. Head of L&D at Acme Corp"}
-                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none transition-colors ${
+                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${
                                             errors.role ? "border-red-400" : "border-white/20 focus:border-champagne"
                                         }`}
                                     />
@@ -341,7 +341,7 @@ export default function FormPage() {
 
                                 {/* Message */}
                                 <div className="form-el">
-                                    <label className="block font-inter font-semibold text-sm text-ivory mb-2">
+                                    <label className="block font-inter font-bold text-sm text-ivory mb-2">
                                         {isWaitlist ? "What do you want to build?" : "Tell us about your team"}
                                     </label>
                                     <textarea
@@ -352,7 +352,7 @@ export default function FormPage() {
                                         placeholder={isWaitlist
                                             ? "Share the project, skill, or outcome you're working toward…"
                                             : "Team size, current challenges, what success looks like for you…"}
-                                        className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/30 focus:outline-none focus:border-champagne transition-colors resize-none"
+                                        className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none focus:border-champagne transition-colors resize-none"
                                     />
                                 </div>
 
