@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
     return (
@@ -31,16 +32,17 @@ export default function Footer() {
                     <div className="flex gap-16 md:gap-24 font-inter text-sm">
                         <div className="flex flex-col gap-4">
                             <h4 className="font-bold text-ivory mb-2 tracking-wider">PLATFORM</h4>
-                            <a href="#features" className="hover:text-champagne transition-colors">Why Join US?</a>
-                            <a href="#protocol" className="hover:text-champagne transition-colors">Let's Talk!</a>
+                            <a href="#features" className="hover:text-champagne transition-colors">Why Join Us</a>
+                            <a href="#testimonials" className="hover:text-champagne transition-colors">Testimonials</a>
                             <a href="#pricing" className="hover:text-champagne transition-colors">Membership</a>
+                            <a href="#join-club" className="hover:text-champagne transition-colors">Book a Call</a>
                         </div>
 
                         <div className="flex flex-col gap-4">
-                            <h4 className="font-bold text-ivory mb-2 tracking-wider">RESOURCES</h4>
-                            <a href="#" className="hover:text-champagne transition-colors">Journal</a>
-                            <a href="#" className="hover:text-champagne transition-colors">Case Studies</a>
-                            <a href="#" className="hover:text-champagne transition-colors">Careers</a>
+                            <h4 className="font-bold text-ivory mb-2 tracking-wider">GET STARTED</h4>
+                            <Link to="/apply?type=waitlist" className="hover:text-champagne transition-colors">Join the Waitlist</Link>
+                            <Link to="/apply?type=partners" className="hover:text-champagne transition-colors">Enterprise Enquiry</Link>
+                            <a href="mailto:hello@opportuneai.com" className="hover:text-champagne transition-colors">Contact Us</a>
                         </div>
                     </div>
 
@@ -50,9 +52,8 @@ export default function Footer() {
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono tracking-widest text-ivory/30 uppercase">
                     <p>&copy; {new Date().getFullYear()} OpportuneAI. All rights reserved.</p>
                     <div className="flex gap-6">
-                        <a href="#" className="hover:text-ivory transition-colors">Privacy</a>
-                        <a href="#" className="hover:text-ivory transition-colors">Terms</a>
-                        <a href="#" className="hover:text-ivory transition-colors">Cookies</a>
+                        <Link to="/privacy" className="hover:text-ivory transition-colors">Privacy</Link>
+                        <Link to="/terms" className="hover:text-ivory transition-colors">Terms</Link>
                     </div>
                 </div>
 

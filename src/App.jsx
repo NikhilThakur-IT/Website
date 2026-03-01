@@ -10,6 +10,8 @@ import Testimonials from './components/Testimonials';
 import BookCall from './components/BookCall';
 import Footer from './components/Footer';
 import FormPage from './components/FormPage';
+import PrivacyPage from './components/PrivacyPage';
+import TermsPage from './components/TermsPage';
 
 function Landing() {
   return (
@@ -33,6 +35,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/apply" element={<FormPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
       </Routes>
     </BrowserRouter>
   );
