@@ -173,9 +173,37 @@ export default function FormPage() {
                                     ? "You're on the list. We'll reach out when the next cohort opens."
                                     : "Thanks for reaching out. Our partnerships team will be in touch shortly."}
                             </p>
+
+                            {/* Next steps */}
+                            <div className="w-full max-w-sm mt-2 border border-white/8 rounded-2xl bg-white/3 p-6 text-left flex flex-col gap-4">
+                                <p className="font-mono text-xs tracking-widest text-champagne/50 uppercase">What happens next</p>
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex items-start gap-3">
+                                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-champagne/10 font-mono text-[10px] text-champagne">1</span>
+                                        <p className="font-inter text-sm text-ivory/60">A confirmation email is on its way to your inbox.</p>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-champagne/10 font-mono text-[10px] text-champagne">2</span>
+                                        <p className="font-inter text-sm text-ivory/60">
+                                            {isWaitlist
+                                                ? "Our team will review your application within 48 hours."
+                                                : "A partnerships lead will personally reach out within 24 hours."}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-champagne/10 font-mono text-[10px] text-champagne">3</span>
+                                        <p className="font-inter text-sm text-ivory/60">
+                                            {isWaitlist
+                                                ? "If selected, you'll get onboarding details and community access."
+                                                : "We'll schedule a discovery call tailored to your team's needs."}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
                             <button
                                 onClick={() => navigate("/")}
-                                className="btn-magnetic mt-4 bg-champagne/10 border border-champagne/30 text-champagne px-8 py-3 rounded-full font-inter font-semibold text-sm tracking-wide hover:bg-champagne hover:text-obsidian transition-colors"
+                                className="btn-magnetic mt-2 bg-champagne/10 border border-champagne/30 text-champagne px-8 py-3 rounded-full font-inter font-semibold text-sm tracking-wide hover:bg-champagne hover:text-obsidian transition-colors"
                             >
                                 <span>Back to Home</span>
                             </button>
