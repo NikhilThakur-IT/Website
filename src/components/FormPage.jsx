@@ -138,17 +138,22 @@ export default function FormPage() {
     return (
         <div
             ref={comp}
-            className="min-h-screen bg-obsidian flex flex-col selection:bg-champagne/20"
-            style={{
-                background:
-                    "radial-gradient(ellipse 70% 55% at 50% 0%, rgba(201,168,76,0.06) 0%, #0D0D12 60%)",
-            }}
+            className="relative min-h-screen flex flex-col selection:bg-champagne/20 overflow-hidden"
         >
+            {/* ── Hero-identical background ── */}
+            <div
+                className="absolute inset-0 z-0 bg-center bg-cover"
+                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1620825937374-87fc7d62828e?q=80&w=2000&auto=format&fit=crop')" }}
+            >
+                <div className="absolute inset-0 bg-gradient-to-b from-obsidian/60 via-obsidian/80 to-obsidian" />
+                <div className="absolute inset-0 bg-obsidian/40" />
+            </div>
+
             {/* Back nav */}
             <div className="form-el fixed top-5 left-5 z-50">
                 <button
                     onClick={() => navigate("/")}
-                    className="group flex items-center justify-center w-10 h-10 rounded-full text-champagne/50 hover:text-champagne transition-colors duration-200"
+                    className="group flex items-center justify-center w-10 h-10 rounded-full text-champagne/60 hover:text-champagne transition-colors duration-200"
                     aria-label="Back to OpportuneAI"
                 >
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -157,7 +162,7 @@ export default function FormPage() {
                 </button>
             </div>
 
-            <div className="flex-1 flex items-center justify-center px-6 md:px-12 py-16">
+            <div className="relative z-10 flex-1 flex items-center justify-center px-6 md:px-12 py-16">
                 <div className="w-full max-w-lg">
 
                     {status === "success" ? (
@@ -170,7 +175,7 @@ export default function FormPage() {
                             <h2 className="font-playfair italic text-5xl md:text-6xl text-champagne font-semibold">We got you.</h2>
                             <p className="font-inter text-ivory/70 text-base md:text-lg max-w-sm leading-relaxed">
                                 {isWaitlist
-                                    ? "You're on the list. We'll reach out when the next cohort opens."
+                                    ? "You're on the list. We'll reach out when there's an opening."
                                     : "Thanks for reaching out. Our partnerships team will be in touch shortly."}
                             </p>
 
@@ -212,20 +217,21 @@ export default function FormPage() {
                         <>
                             {/* Header */}
                             <div className="form-el mb-10">
-                                <p className="font-mono text-xs font-bold tracking-widest text-champagne uppercase mb-4">
-                                    — Get in touch
+                                <p className="font-mono text-xs font-bold tracking-[0.2em] text-champagne uppercase mb-5 flex items-center gap-2">
+                                    <span className="inline-block w-5 h-px bg-champagne/60" />
+                                    Get in touch
                                 </p>
-                                <h1 className="font-playfair italic font-semibold text-5xl md:text-6xl text-ivory leading-tight mb-3">
+                                <h1 className="font-playfair italic font-semibold text-5xl md:text-7xl text-ivory leading-tight mb-4 drop-shadow-[0_2px_24px_rgba(201,168,76,0.18)]">
                                     {isWaitlist ? "Reserve your seat." : "Let's build together."}
                                 </h1>
-                                <p className="font-inter text-ivory/60 text-base leading-relaxed">
+                                <p className="font-inter text-ivory/80 text-base md:text-lg leading-relaxed">
                                     {isWaitlist
                                         ? "Spots are limited. Tell us a little about where you're headed."
                                         : "Serious about transformation at scale? Let's talk."}
                                 </p>
                             </div>
 
-                            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+                            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5 bg-obsidian/50 backdrop-blur-md border border-white/8 rounded-3xl p-6 md:p-8">
 
                                 {/* Honeypot — off-screen, invisible to real users, attracts bots */}
                                 <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", height: 0, overflow: "hidden", opacity: 0 }}>
@@ -243,7 +249,7 @@ export default function FormPage() {
 
                                 {/* Interest selector */}
                                 <div className="form-el">
-                                    <label className="block font-inter font-bold text-sm text-ivory mb-3">
+                                    <label className="block font-inter font-semibold text-sm text-ivory/90 uppercase tracking-widest mb-3">
                                         I'm here to
                                     </label>
                                     <div className="grid grid-cols-1 gap-3">
@@ -290,9 +296,8 @@ export default function FormPage() {
                                         value={form.name}
                                         onChange={handleChange}
                                         placeholder="Jane Smith"
-                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${
-                                            errors.name ? "border-red-400" : "border-white/20 focus:border-champagne"
-                                        }`}
+                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${errors.name ? "border-red-400" : "border-white/20 focus:border-champagne"
+                                            }`}
                                     />
                                     {errors.name && (
                                         <p className="mt-1.5 font-mono text-xs text-red-400/80">{errors.name}</p>
@@ -310,9 +315,8 @@ export default function FormPage() {
                                         value={form.email}
                                         onChange={handleChange}
                                         placeholder="jane@company.com"
-                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${
-                                            errors.email ? "border-red-400" : "border-white/20 focus:border-champagne"
-                                        }`}
+                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${errors.email ? "border-red-400" : "border-white/20 focus:border-champagne"
+                                            }`}
                                     />
                                     {errors.email && (
                                         <p className="mt-1.5 font-mono text-xs text-red-400/80">{errors.email}</p>
@@ -330,9 +334,8 @@ export default function FormPage() {
                                         value={form.role}
                                         onChange={handleChange}
                                         placeholder={isWaitlist ? "e.g. Software Engineer at Acme" : "e.g. Head of L&D at Acme Corp"}
-                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${
-                                            errors.role ? "border-red-400" : "border-white/20 focus:border-champagne"
-                                        }`}
+                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${errors.role ? "border-red-400" : "border-white/20 focus:border-champagne"
+                                            }`}
                                     />
                                     {errors.role && (
                                         <p className="mt-1.5 font-mono text-xs text-red-400/80">{errors.role}</p>
