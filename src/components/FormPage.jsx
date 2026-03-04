@@ -11,6 +11,21 @@ const INTEREST_OPTIONS = [
     { value: "partners", label: "Explore an Enterprise Partnership" },
 ];
 
+const GOAL_OPTIONS = {
+    waitlist: [
+        { value: "break-in", label: "Break into AI / tech from another field" },
+        { value: "level-up", label: "Level up and get promoted in my current role" },
+        { value: "higher-pay", label: "Transition to a significantly higher-paying career" },
+        { value: "build-own", label: "Build my own AI-powered project or business" },
+    ],
+    partners: [
+        { value: "upskill", label: "Upskill our team on AI tools and workflows" },
+        { value: "retention", label: "Improve talent retention through learning investment" },
+        { value: "leadership", label: "Prepare leadership for AI-driven disruption" },
+        { value: "culture", label: "Build a culture of continuous, high-performance learning" },
+    ],
+};
+
 // Rate limiting: max 3 submissions per hour stored in localStorage
 const RATE_LIMIT_KEY = "oai_form_submissions";
 const RATE_LIMIT_MAX = 3;
@@ -40,8 +55,8 @@ function validateForm(form) {
     if (!form.email.trim() || !emailRe.test(form.email.trim())) {
         errors.email = "Please enter a valid email address.";
     }
-    if (!form.role.trim() || form.role.trim().length < 2) {
-        errors.role = "Please enter your role.";
+    if (!form.goal) {
+        errors.goal = "Please select an option.";
     }
     return errors;
 }
@@ -57,7 +72,7 @@ export default function FormPage() {
         name: "",
         email: "",
         interest: initialInterest,
-        role: "",
+        goal: "",
         message: "",
         website: "", // honeypot field — must stay empty
     });
@@ -79,7 +94,12 @@ export default function FormPage() {
 
     function handleChange(e) {
         const { name, value } = e.target;
-        setForm((prev) => ({ ...prev, [name]: value }));
+        setForm((prev) => ({
+            ...prev,
+            [name]: value,
+            // reset goal when interest changes so stale options don't submit
+            ...(name === "interest" ? { goal: "" } : {}),
+        }));
         if (errors[name]) {
             setErrors((prev) => ({ ...prev, [name]: undefined }));
         }
@@ -117,7 +137,7 @@ export default function FormPage() {
                     name: form.name,
                     email: form.email,
                     interest: INTEREST_OPTIONS.find((o) => o.value === form.interest)?.label,
-                    role: form.role,
+                    goal: GOAL_OPTIONS[form.interest]?.find((o) => o.value === form.goal)?.label,
                     message: form.message,
                 }),
             });
@@ -323,38 +343,47 @@ export default function FormPage() {
                                     )}
                                 </div>
 
-                                {/* Role / Company */}
+                                {/* Qualifying goal question */}
                                 <div className="form-el">
                                     <label className="block font-inter font-bold text-sm text-ivory mb-2">
-                                        {isWaitlist ? "Current Role" : "Company & Role"}
+                                        {isWaitlist ? "What's your #1 goal right now?" : "What's your team's biggest need?"}
                                     </label>
-                                    <input
-                                        type="text"
-                                        name="role"
-                                        value={form.role}
-                                        onChange={handleChange}
-                                        placeholder={isWaitlist ? "e.g. Software Engineer at Acme" : "e.g. Head of L&D at Acme Corp"}
-                                        className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${errors.role ? "border-red-400" : "border-white/20 focus:border-champagne"
-                                            }`}
-                                    />
-                                    {errors.role && (
-                                        <p className="mt-1.5 font-mono text-xs text-red-400/80">{errors.role}</p>
+                                    <div className="relative">
+                                        <select
+                                            name="goal"
+                                            value={form.goal}
+                                            onChange={handleChange}
+                                            className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian focus:outline-none transition-colors appearance-none cursor-pointer ${errors.goal ? "border-red-400" : "border-white/20 focus:border-champagne"}`}
+                                        >
+                                            <option value="" disabled>Select one…</option>
+                                            {GOAL_OPTIONS[form.interest].map((opt) => (
+                                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                                            ))}
+                                        </select>
+                                        <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2A2A35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M6 9l6 6 6-6" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    {errors.goal && (
+                                        <p className="mt-1.5 font-mono text-xs text-red-400/80">{errors.goal}</p>
                                     )}
                                 </div>
 
                                 {/* Message */}
                                 <div className="form-el">
                                     <label className="block font-inter font-bold text-sm text-ivory mb-2">
-                                        {isWaitlist ? "What do you want to build?" : "Tell us about your team"}
+                                        {isWaitlist ? "Anything else we should know?" : "Tell us about your team"}
                                     </label>
                                     <textarea
                                         name="message"
                                         value={form.message}
                                         onChange={handleChange}
-                                        rows={4}
+                                        rows={3}
                                         placeholder={isWaitlist
-                                            ? "Share the project, skill, or outcome you're working toward…"
-                                            : "Team size, current challenges, what success looks like for you…"}
+                                            ? "Where are you now, and what does success look like in 6 months?"
+                                            : "Team size, current tools, and what success looks like for you…"}
                                         className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none focus:border-champagne transition-colors resize-none"
                                     />
                                 </div>
