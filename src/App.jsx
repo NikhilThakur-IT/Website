@@ -14,7 +14,7 @@ import TermsPage from './components/TermsPage';
 
 function Landing() {
   return (
-    <div className="min-h-screen bg-ivory text-slate selection:bg-champagne/30 overflow-x-hidden">
+    <div className="min-h-screen bg-ivory text-slate selection:bg-champagne/30 overflow-x-hidden select-none cursor-default">
       <Navbar />
       <Hero />
       <Testimonials />
