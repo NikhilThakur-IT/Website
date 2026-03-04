@@ -79,6 +79,7 @@ export default function Hero() {
                                         key={i}
                                         src={src}
                                         alt=""
+                                        loading="lazy"
                                         className="w-9 h-9 rounded-full border-2 border-obsidian object-cover"
                                     />
                                 ))}
