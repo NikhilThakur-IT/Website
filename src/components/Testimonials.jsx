@@ -203,6 +203,7 @@ export default function Testimonials() {
                                         <img
                                             src={t.avatar}
                                             alt={t.name}
+                                            loading="lazy"
                                             className="w-10 h-10 rounded-full object-cover ring-2 ring-white/10 shrink-0"
                                         />
                                         <div>
@@ -221,6 +222,11 @@ export default function Testimonials() {
                             </div>
                         ))}
                     </div>
+                </div>
+
+                {/* Screen-reader live region — announces current testimonial on nav */}
+                <div aria-live="polite" aria-atomic="true" className="sr-only">
+                    {`Testimonial ${current + 1} of ${testimonials.length}: ${testimonials[current].name}, ${testimonials[current].role}`}
                 </div>
 
                 {/* Progress bar + counter */}

@@ -161,6 +161,7 @@ function FAQ() {
                             onClick={() => setOpen(isOpen ? null : i)}
                             className="text-left py-5 group"
                             aria-expanded={isOpen}
+                            aria-controls={`faq-answer-${i}`}
                         >
                             <div className="flex items-center justify-between gap-4">
                                 <span className="font-inter font-semibold text-sm md:text-base text-obsidian">
@@ -174,6 +175,8 @@ function FAQ() {
                                 </svg>
                             </div>
                             <div
+                                id={`faq-answer-${i}`}
+                                role="region"
                                 className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-40 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}
                             >
                                 <p className="font-inter text-sm text-slate/70 leading-relaxed pr-8">

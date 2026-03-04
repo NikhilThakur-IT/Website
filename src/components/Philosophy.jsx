@@ -45,7 +45,9 @@ export default function Philosophy() {
             <div className="absolute inset-0 z-0 overflow-hidden opacity-20 pointer-events-none">
                 <img
                     src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop"
-                    alt="Abstract dark texture"
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
                     className="philosophy-bg w-full h-[120%] object-cover -mt-[10%]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-obsidian via-transparent to-obsidian"></div>
