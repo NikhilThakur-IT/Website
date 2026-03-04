@@ -57,9 +57,9 @@ export default function Hero() {
                     </p>
 
                     <div className="hero-cta mt-12 flex flex-col items-center gap-6">
-                        <button className="btn-magnetic bg-champagne text-obsidian px-8 py-4 rounded-full font-semibold tracking-wide text-lg shadow-[0_0_30px_rgba(201,168,76,0.2)] hover:shadow-[0_0_40px_rgba(201,168,76,0.4)]">
+                        <a href="#join-club" className="btn-magnetic bg-champagne text-obsidian px-8 py-4 rounded-full font-semibold tracking-wide text-lg shadow-[0_0_30px_rgba(201,168,76,0.2)] hover:shadow-[0_0_40px_rgba(201,168,76,0.4)]">
                             <span>I AM READY TO LEARN</span>
-                        </button>
+                        </a>
                         <span className="text-ivory/50 font-mono text-sm uppercase tracking-widest hidden md:inline-block">
                             Get Free Access Today
                         </span>
