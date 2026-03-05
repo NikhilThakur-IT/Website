@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MousePointer2, CircleDashed } from "lucide-react";
+import { MousePointer2 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,7 +29,6 @@ function CardShuffler() {
   return (
     <div className="relative h-48 w-full flex items-center justify-center mt-6">
       {items.map((originalIndex, currentPos) => {
-        const _isTop = currentPos === 0;
         const scale = 1 - currentPos * 0.05;
         const translateY = currentPos * 16;
         const opacity = 1 - currentPos * 0.2;
@@ -192,12 +191,13 @@ function CardScheduler() {
       </div>
 
       <div className="absolute bottom-5 right-5">
-        <button
+        <span
           ref={saveBtnRef}
-          className="bg-white/10 text-ivory/80 px-4 py-1.5 rounded-full font-mono text-xs tracking-wide"
+          className="bg-white/10 text-ivory/80 px-4 py-1.5 rounded-full font-mono text-xs tracking-wide inline-block"
+          aria-hidden="true"
         >
           Commit Time
-        </button>
+        </span>
       </div>
 
       {/* SVG Cursor */}

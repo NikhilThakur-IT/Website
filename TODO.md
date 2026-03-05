@@ -22,27 +22,27 @@
 ## CRITICAL
 
 ### Task 1: Add 404 catch-all route
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `App.jsx:33-38`
 - **Details:** Unknown routes show a blank page. Add `<Route path="*" element={<NotFound />} />`.
 
 ### Task 2: Fix stale closure bug in Testimonials carousel
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `Testimonials.jsx:67`
 - **Details:** `slideTo` has empty `[]` deps in `useCallback` but reads `current` via closure. Dragging can produce wrong slide indices. Add `current` to dependency array.
 
 ### Task 3: Self-host critical images
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **Files:** `Hero.jsx:36,71-85`, `Philosophy.jsx:47`, `FormPage.jsx:188`
 - **Details:** Hero background, 5 avatars (randomuser.me), philosophy background, and form background all depend on external URLs. Download and place in `public/images/`. If Unsplash or randomuser.me is slow/down, the site looks broken.
 
 ### Task 4: Self-host OG/Twitter social image
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `index.html:13,18`
 - **Details:** OG and Twitter card images point to external Unsplash URL. Social previews break if URL changes. Save to `public/og-image.jpg`.
 
 ### Task 5: Add `.env` to .gitignore
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `.gitignore`
 - **Details:** Add `.env`, `.env.*`, `.env.local`, `.env.production` patterns. Currently only `*.local` is covered.
 
@@ -51,17 +51,17 @@
 ## HIGH — Security
 
 ### Task 6: Harden CSP in vercel.json
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `vercel.json:9`
 - **Details:** Add missing directives: `base-uri 'self'`, `form-action 'self' https://formspree.io`, `object-src 'none'`, `upgrade-insecure-requests`. Evaluate removing `unsafe-inline` for scripts (may need Vite CSP nonce plugin).
 
 ### Task 7: Fix deprecated X-XSS-Protection header
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `vercel.json:25`
 - **Details:** Set to `0` or remove. The `1; mode=block` value is a no-op in modern browsers and can cause issues in old IE.
 
 ### Task 8: Fix Cal.com script injection issues
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `BookCall.jsx:15-46`
 - **Details:** Script re-injects on every mount (React StrictMode). No dedup check, no cleanup on unmount, no `integrity`/`crossorigin` attributes. Add script-already-loaded guard and cleanup function.
 
@@ -75,7 +75,7 @@
 - **Details:** Add visually-hidden "Skip to main content" link at top of page for keyboard/screen reader users.
 
 ### Task 10: Add `<main>` landmark to all pages
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **Files:** `App.jsx:17`, `FormPage.jsx`, `PrivacyPage.jsx`, `TermsPage.jsx`
 - **Details:** Wrap page content in `<main>` element. Assistive tech currently can't identify the main content region.
 
@@ -158,17 +158,17 @@
 - **Details:** CLAUDE.md mandates `useLayoutEffect` for all GSAP animations. `useEffect` causes flash of unanimated content.
 
 ### Task 25: Remove dead code in Features.jsx
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `Features.jsx:4,32`
 - **Details:** `CircleDashed` imported but never used (line 4). `_isTop` variable declared but never used (line 32).
 
 ### Task 26: Fix fake "Commit Time" button
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `Features.jsx:198`
 - **Details:** Looks interactive but does nothing. Change to `<span>` or add `aria-hidden="true"` and `tabindex="-1"`.
 
 ### Task 27: Fix dead Tailwind v2 class
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `Pricing.jsx:67`
 - **Details:** `border-opacity-10` was removed in Tailwind v3. Border has no opacity effect. Use `border-obsidian/10` instead.
 
@@ -178,7 +178,7 @@
 - **Details:** `cn()` (clsx + tailwind-merge) is exported from a UI component. Creates architectural coupling. Move to `src/lib/utils.js`.
 
 ### Task 29: Remove dead SVG filter in index.html
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `index.html:31-35`
 - **Details:** `<filter id="noiseFilter">` is never referenced. Only the `data:` URI noise overlay works. Remove the dead SVG.
 

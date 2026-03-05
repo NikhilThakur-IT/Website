@@ -64,7 +64,7 @@ export default function Pricing() {
                                 </p>
                             </div>
 
-                            <div className="mb-8 border-b pb-8 border-opacity-10 border-current">
+                            <div className={`mb-8 border-b pb-8 ${tier.primary ? 'border-ivory/10' : 'border-obsidian/10'}`}>
                                 <div className="flex items-baseline gap-2">
                                     <span className={`text-4xl font-inter font-bold tracking-tight ${tier.primary ? 'text-champagne' : 'text-obsidian'}`}>
                                         {tier.price}

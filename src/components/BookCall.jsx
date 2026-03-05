@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useEffect } from "react";
+import React, { useRef, useLayoutEffect, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,9 +9,17 @@ const CAL_LINK = "nik-thakur";
 
 export default function BookCall() {
     const comp = useRef(null);
+    const [calReady, setCalReady] = useState(false);
 
     useEffect(() => {
-        // Initialise Cal.com embed overlay
+        // Guard against duplicate script injection (React StrictMode double-mount)
+        if (window.Cal?.loaded) {
+            // Already loaded — just ensure our namespace is initialised
+            window.Cal("init", CAL_NAMESPACE, { origin: "https://cal.com" });
+            window.Cal.ns[CAL_NAMESPACE]?.("ui", { hideEventTypeDetails: false });
+            return;
+        }
+
         (function (C, A, L) {
             let p = function (a, ar) {
                 a.q.push(ar);
@@ -25,7 +33,10 @@ export default function BookCall() {
                     if (!cal.loaded) {
                         cal.ns = {};
                         cal.q = cal.q || [];
-                        d.head.appendChild(d.createElement("script")).src = A;
+                        const s = d.createElement("script");
+                        s.src = A;
+                        s.crossOrigin = "anonymous";
+                        d.head.appendChild(s);
                         cal.loaded = true;
                     }
                     if (ar[0] === L) {
@@ -47,6 +58,20 @@ export default function BookCall() {
 
         window.Cal("init", CAL_NAMESPACE, { origin: "https://cal.com" });
         window.Cal.ns[CAL_NAMESPACE]("ui", { hideEventTypeDetails: false });
+
+        // Detect when Cal embed is ready
+        const checkCal = setInterval(() => {
+            if (window.Cal?.ns?.[CAL_NAMESPACE]) {
+                setCalReady(true);
+                clearInterval(checkCal);
+            }
+        }, 500);
+        const timeout = setTimeout(() => clearInterval(checkCal), 10000);
+
+        return () => {
+            clearInterval(checkCal);
+            clearTimeout(timeout);
+        };
     }, []);
 
     useLayoutEffect(() => {
@@ -93,14 +118,25 @@ export default function BookCall() {
                 </p>
 
                 <div className="book-content flex flex-col items-center gap-4 mt-4">
-                    <button
-                        data-cal-namespace={CAL_NAMESPACE}
-                        data-cal-link={CAL_LINK}
-                        data-cal-config="{}"
-                        className="btn-magnetic bg-champagne text-obsidian px-10 py-5 rounded-full font-inter font-semibold tracking-wide text-base shadow-[0_0_40px_rgba(201,168,76,0.15)] hover:shadow-[0_0_60px_rgba(201,168,76,0.3)] transition-shadow"
-                    >
-                        <span>Book a Session</span>
-                    </button>
+                    {calReady ? (
+                        <button
+                            data-cal-namespace={CAL_NAMESPACE}
+                            data-cal-link={CAL_LINK}
+                            data-cal-config="{}"
+                            className="btn-magnetic bg-champagne text-obsidian px-10 py-5 rounded-full font-inter font-semibold tracking-wide text-base shadow-[0_0_40px_rgba(201,168,76,0.15)] hover:shadow-[0_0_60px_rgba(201,168,76,0.3)] transition-shadow"
+                        >
+                            <span>Book a Session</span>
+                        </button>
+                    ) : (
+                        <a
+                            href={`https://cal.com/${CAL_LINK}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-magnetic bg-champagne text-obsidian px-10 py-5 rounded-full font-inter font-semibold tracking-wide text-base shadow-[0_0_40px_rgba(201,168,76,0.15)] hover:shadow-[0_0_60px_rgba(201,168,76,0.3)] transition-shadow"
+                        >
+                            <span>Book a Session</span>
+                        </a>
+                    )}
                     <span className="font-mono text-xs text-ivory/20 uppercase tracking-widest">
                         Powered by Cal.com
                     </span>

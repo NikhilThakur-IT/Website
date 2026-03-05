@@ -16,12 +16,14 @@ function Landing() {
   return (
     <div className="min-h-screen bg-ivory text-slate selection:bg-champagne/30 overflow-x-hidden select-none cursor-default">
       <Navbar />
-      <Hero />
-      <Testimonials />
-      <Features />
-      <Philosophy />
-      <BookCall />
-      <Pricing />
+      <main>
+        <Hero />
+        <Testimonials />
+        <Features />
+        <Philosophy />
+        <BookCall />
+        <Pricing />
+      </main>
       <Footer />
     </div>
   );
@@ -29,7 +31,7 @@ function Landing() {
 
 function NotFound() {
   return (
-    <div className="min-h-screen bg-obsidian flex flex-col items-center justify-center text-center px-6 selection:bg-champagne/30">
+    <main className="min-h-screen bg-obsidian flex flex-col items-center justify-center text-center px-6 selection:bg-champagne/30">
       <p className="font-mono text-xs tracking-widest text-champagne/50 uppercase mb-4">404</p>
       <h1 className="font-playfair italic text-5xl md:text-7xl text-ivory font-semibold mb-4">
         Page not found.
@@ -43,7 +45,7 @@ function NotFound() {
       >
         <span>Back to Home</span>
       </Link>
-    </div>
+    </main>
   );
 }
 

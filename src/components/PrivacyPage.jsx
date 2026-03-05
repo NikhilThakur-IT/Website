@@ -5,7 +5,7 @@ export default function PrivacyPage() {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-obsidian text-ivory selection:bg-champagne/20">
+        <main className="min-h-screen bg-obsidian text-ivory selection:bg-champagne/20">
             <div className="fixed top-5 left-5 z-50">
                 <button
                     onClick={() => navigate("/")}
@@ -56,6 +56,6 @@ export default function PrivacyPage() {
                     <p className="text-ivory/30 font-mono text-xs mt-4">Last updated: March 2026</p>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }

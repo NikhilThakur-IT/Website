@@ -180,7 +180,7 @@ export default function FormPage() {
   const isLoading = status === "loading";
 
   return (
-    <div
+    <main
       ref={comp}
       className="relative min-h-screen flex flex-col selection:bg-champagne/20 overflow-hidden"
     >
@@ -528,6 +528,6 @@ export default function FormPage() {
           )}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
