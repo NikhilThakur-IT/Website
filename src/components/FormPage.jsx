@@ -188,8 +188,7 @@ export default function FormPage() {
       <div
         className="absolute inset-0 z-0 bg-center bg-cover"
         style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1620825937374-87fc7d62828e?q=80&w=2000&auto=format&fit=crop')",
+          backgroundImage: "url('/images/hero-bg.jpg')",
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-obsidian/60 via-obsidian/80 to-obsidian" />

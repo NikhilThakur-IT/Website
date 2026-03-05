@@ -33,7 +33,7 @@ export default function Hero() {
             {/* Background Image */}
             <div
                 className="absolute inset-0 z-0 bg-center bg-cover"
-                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1620825937374-87fc7d62828e?q=80&w=2000&auto=format&fit=crop')" }}
+                style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
             >
                 {/* Heavy Primary-to-Black Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-obsidian/60 via-obsidian/80 to-obsidian"></div>
@@ -69,11 +69,11 @@ export default function Hero() {
                             {/* Overlapping avatars */}
                             <div className="flex -space-x-3">
                                 {[
-                                    "https://randomuser.me/api/portraits/women/44.jpg",
-                                    "https://randomuser.me/api/portraits/men/32.jpg",
-                                    "https://randomuser.me/api/portraits/women/68.jpg",
-                                    "https://randomuser.me/api/portraits/men/75.jpg",
-                                    "https://randomuser.me/api/portraits/men/46.jpg",
+                                    "/images/avatar-44.jpg",
+                                    "/images/avatar-32.jpg",
+                                    "/images/avatar-68.jpg",
+                                    "/images/avatar-75.jpg",
+                                    "/images/avatar-46.jpg",
                                 ].map((src, i) => (
                                     <img
                                         key={i}

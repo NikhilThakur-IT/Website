@@ -44,7 +44,7 @@ export default function Philosophy() {
             {/* Background Parallax Image */}
             <div className="absolute inset-0 z-0 overflow-hidden opacity-20 pointer-events-none">
                 <img
-                    src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000&auto=format&fit=crop"
+                    src="/images/philosophy-bg.jpg"
                     alt=""
                     aria-hidden="true"
                     loading="lazy"

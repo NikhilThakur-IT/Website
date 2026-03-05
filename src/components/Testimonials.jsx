@@ -10,35 +10,35 @@ const testimonials = [
         name: "Lauren M.",
         role: "Product Manager · Fintech",
         detail: "Member since Jan 2026",
-        avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+        avatar: "/images/avatar-44.jpg",
     },
     {
         quote: "Landed my first $3.4k automation client three weeks after joining. I'm not even going to pretend I knew what I was doing. I basically reverse-engineered a workflow from a thread in the community and pitched it. Nobody told me it was that simple to just start.",
         name: "James R.",
         role: "English Teacher (Now Freelance Developer)",
         detail: "Member since Nov 2025",
-        avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+        avatar: "/images/avatar-32.jpg",
     },
     {
         quote: "I almost spent $800 on a tool that someone here talked me out of in about four messages. The community isn't just motivational fluff. People will tell you when you're wrong, and that's honestly rarer than it sounds.",
         name: "Sarah K.",
         role: "Marketing Director · SaaS",
         detail: "Member since Feb 2025",
-        avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+        avatar: "/images/avatar-68.jpg",
     },
     {
         quote: "Took me longer than I expected to transition out of teaching — about eight months, not three. But I'm now consulting on AI curriculum for two schools and making more than I ever did in a classroom. Still check the digest every Monday without fail.",
         name: "Daniel O.",
         role: "Math Teacher",
         detail: "Member since Aug 2025",
-        avatar: "https://randomuser.me/api/portraits/men/75.jpg",
+        avatar: "/images/avatar-75.jpg",
     },
     {
         quote: "The prompting guide alone was worth it. Not the 'act as a CEO' stuff, there were actual structured prompting for engineering workflows. I sent it to my whole team. We cut sprint planning from three hours to forty minutes.",
         name: "Marcus T.",
         role: "Senior Software Engineer",
         detail: "Member since Mar 2025",
-        avatar: "https://randomuser.me/api/portraits/men/46.jpg",
+        avatar: "/images/avatar-46.jpg",
     },
 ];
 
@@ -64,6 +64,7 @@ export default function Testimonials() {
             duration: 0.65,
             ease: 'power3.out',
         });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useLayoutEffect(() => {
