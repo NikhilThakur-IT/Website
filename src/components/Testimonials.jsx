@@ -115,6 +115,11 @@ export default function Testimonials() {
         dragStartOffset.current = Number(gsap.getProperty(trackRef.current, 'x')) || 0;
     };
 
+    const onTouchMove = (e) => {
+        const delta = e.touches[0].clientX - dragStartX.current;
+        gsap.set(trackRef.current, { x: dragStartOffset.current + delta });
+    };
+
     const onTouchEnd = (e) => {
         const delta = e.changedTouches[0].clientX - dragStartX.current;
         if (delta < -50) slideTo(current + 1);
@@ -173,6 +178,7 @@ export default function Testimonials() {
                     onMouseUp={onMouseUp}
                     onMouseLeave={onMouseUp}
                     onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
                     onTouchEnd={onTouchEnd}
                 >
                     <div

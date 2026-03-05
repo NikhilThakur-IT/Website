@@ -217,22 +217,22 @@
 ## MEDIUM — UX
 
 ### Task 36: Add Cal.com fallback link
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `BookCall.jsx:96-103`
 - **Details:** If embed script fails (ad blocker, network), button does nothing silently. Add fallback `<a href="https://cal.com/nik-thakur">` that opens when Cal.com isn't loaded.
 
 ### Task 37: Fix mobile menu UX (escape key + click outside)
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `Navbar.jsx`
 - **Details:** No escape key handler. Clicking outside doesn't close. Standard mobile UX expectations.
 
 ### Task 38: Show "Get Free Access Today" on mobile
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `Hero.jsx:63`
 - **Details:** `hidden md:inline-block` hides this value prop text from mobile users.
 
 ### Task 39: Add touch-follow feedback to Testimonials
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `Testimonials.jsx:169`
 - **Details:** Touch users see no movement until release. No visual peek of next card. Consider adding real-time drag follow on `onTouchMove`.
 
