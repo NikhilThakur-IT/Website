@@ -3,25 +3,25 @@ import { Link } from 'react-router-dom';
 
 const tiers = [
     {
+        name: "Community",
+        price: "Free",
+        period: "forever",
+        description: "Access to the digital lounge and member directory.",
+        features: ["Skool Community Access", "Weekly digest", "Community events"],
+        primary: false,
+        cta: "Join the Club",
+        href: "#join-club"
+    },
+    {
         name: "Performance",
         price: "$2,000",
         period: "/ workshop",
         priceNote: "One-time fee per 4-week sprint",
         description: "Intensive 4-week structured AI engineering sprints.",
         features: ["Project-based curriculum", "1:1 Architecture reviews", "Portfolio engineering", "Priority networking"],
-        primary: false,
+        primary: true,
         cta: "Join the Waiting List",
         href: "/apply?type=waitlist"
-    },
-    {
-        name: "Community",
-        price: "Free",
-        period: "forever",
-        description: "Access to the digital lounge and member directory.",
-        features: ["Skool Community Access", "Weekly digest", "Community events"],
-        primary: true,
-        cta: "Join the Club",
-        href: "#join-club"
     },
     {
         name: "Enterprise",
