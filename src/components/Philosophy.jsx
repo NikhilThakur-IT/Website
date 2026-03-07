@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -7,7 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Philosophy() {
     const comp = useRef(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         let ctx = gsap.context(() => {
             // Parallax Background
             gsap.to(".philosophy-bg", {

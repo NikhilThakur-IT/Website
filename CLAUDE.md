@@ -17,13 +17,23 @@ npm run preview   # Preview production build locally
 
 ## Architecture
 
-`App.jsx` composes 7 full-page section components in order:
+`App.jsx` defines a `BrowserRouter` with four routes:
+
+| Route | Component | Description |
+|---|---|---|
+| `/` | `Landing` | Main landing page |
+| `/apply` | `FormPage` | Application form (Formspree `mzdaogwo`) |
+| `/privacy` | `PrivacyPage` | Privacy policy |
+| `/terms` | `TermsPage` | Terms of service |
+| `*` | `NotFound` | 404 page |
+
+The `Landing` component composes sections in this order:
 
 ```
-Navbar → Hero → Features → Philosophy → Protocol → Pricing → Footer
+Navbar → Hero → Testimonials → Features → Philosophy → BookCall → Pricing → Footer
 ```
 
-All components live in `src/components/`. Each maps to a named section (`#features`, `#philosophy`, `#protocol`).
+All components live in `src/components/`. Landing sections map to anchor IDs (`#features`, `#philosophy`, etc.). `BookCall` embeds a Cal.com scheduler (`nik-thakur`).
 
 ## Design System (Tailwind tokens)
 

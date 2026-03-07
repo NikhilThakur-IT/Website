@@ -153,7 +153,7 @@
 ## MEDIUM — Bugs & Code Quality
 
 ### Task 24: Fix useEffect → useLayoutEffect for GSAP
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **Files:** `Features.jsx:218`, `Philosophy.jsx:10`
 - **Details:** CLAUDE.md mandates `useLayoutEffect` for all GSAP animations. `useEffect` causes flash of unanimated content.
 
@@ -300,7 +300,7 @@
 ## Conversion & Content (from v1 audit, still pending)
 
 ### Task 51: Create pricing comparison table with "Most Popular" badge
-- **Status:** [ ] Pending
+- **Status:** [x] Done
 - **File:** `Pricing.jsx`
 - **Details:** Add feature comparison matrix across tiers. Add "Most Popular" badge. Clarify "$2,000/workshop" pricing.
 
@@ -310,7 +310,7 @@
 - **Details:** Both sections have zero CTAs — missed conversion points after trust-building content.
 
 ### Task 53: Improve form success message with next steps
-- **Status:** [ ] Pending
+- **Status:** [x] Done (already implemented)
 - **File:** `FormPage.jsx:104-122`
 - **Details:** Add expected response timeline, confirmation email mention, and what to expect next.
 

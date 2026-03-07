@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MousePointer2 } from "lucide-react";
@@ -215,7 +215,7 @@ function CardScheduler() {
 export default function Features() {
   const sectionRef = useRef(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let ctx = gsap.context(() => {
       gsap.from(".feature-card", {
         scrollTrigger: {

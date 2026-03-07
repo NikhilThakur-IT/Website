@@ -6,6 +6,7 @@ const tiers = [
         name: "Performance",
         price: "$2,000",
         period: "/ workshop",
+        priceNote: "One-time fee per 4-week sprint",
         description: "Intensive 4-week structured AI engineering sprints.",
         features: ["Project-based curriculum", "1:1 Architecture reviews", "Portfolio engineering", "Priority networking"],
         primary: false,
@@ -52,11 +53,18 @@ export default function Pricing() {
                     {tiers.map((tier, index) => (
                         <div
                             key={index}
-                            className={`p-8 rounded-[2.5rem] flex flex-col h-full border ${tier.primary
+                            className={`relative p-8 rounded-[2.5rem] flex flex-col h-full border ${tier.primary
                                 ? 'bg-obsidian border-white/10 text-ivory shadow-[0_20px_50px_rgba(0,0,0,0.3)] md:-translate-y-4'
                                 : 'bg-[#F2F0E9] border-obsidian/5 text-slate'
                                 }`}
                         >
+                            {tier.primary && (
+                                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                                    <span className="bg-champagne text-obsidian font-mono text-[10px] font-bold uppercase tracking-[0.15em] px-4 py-1.5 rounded-full shadow-[0_0_20px_rgba(201,168,76,0.3)]">
+                                        Most Popular
+                                    </span>
+                                </div>
+                            )}
                             <div className="mb-8">
                                 <h3 className="font-inter font-bold text-2xl tracking-tighter mb-2">{tier.name}</h3>
                                 <p className={`text-sm ${tier.primary ? 'text-ivory/60' : 'text-slate/70'}`}>
@@ -75,6 +83,11 @@ export default function Pricing() {
                                         </span>
                                     )}
                                 </div>
+                                {tier.priceNote && (
+                                    <p className={`font-inter text-xs mt-1.5 ${tier.primary ? 'text-ivory/50' : 'text-slate/50'}`}>
+                                        {tier.priceNote}
+                                    </p>
+                                )}
                             </div>
 
                             <ul className="flex-1 flex flex-col gap-4 mb-10">
@@ -109,12 +122,77 @@ export default function Pricing() {
                     ))}
                 </div>
 
+                {/* Comparison Table */}
+                <ComparisonTable />
+
                 {/* FAQ */}
                 <FAQ />
 
             </div>
         </section>
     );
+}
+
+const comparisonFeatures = [
+    { name: "Skool Community Access", community: true, performance: true, enterprise: true },
+    { name: "Weekly AI Digest", community: true, performance: true, enterprise: true },
+    { name: "Community Events", community: true, performance: true, enterprise: true },
+    { name: "Project-Based Curriculum", community: false, performance: true, enterprise: true },
+    { name: "1:1 Architecture Reviews", community: false, performance: true, enterprise: true },
+    { name: "Portfolio Engineering", community: false, performance: true, enterprise: true },
+    { name: "Priority Networking", community: false, performance: true, enterprise: true },
+    { name: "Custom Tailored Curriculum", community: false, performance: false, enterprise: true },
+    { name: "On-Site Delivery", community: false, performance: false, enterprise: true },
+    { name: "Executive Alignment Sessions", community: false, performance: false, enterprise: true },
+    { name: "Dedicated Cohort Lead", community: false, performance: false, enterprise: true },
+];
+
+function ComparisonTable() {
+    return (
+        <div className="mt-20 overflow-x-auto">
+            <h3 className="text-center font-inter font-bold text-2xl md:text-3xl tracking-tight text-obsidian mb-10">
+                Compare Plans
+            </h3>
+            <table className="w-full max-w-3xl mx-auto text-sm">
+                <thead>
+                    <tr className="border-b border-obsidian/10">
+                        <th className="text-left font-inter font-semibold text-obsidian py-4 pr-4">Feature</th>
+                        <th className="text-center font-inter font-semibold text-obsidian py-4 px-4 w-28">Community</th>
+                        <th className="text-center font-inter font-semibold text-obsidian py-4 px-4 w-28">Performance</th>
+                        <th className="text-center font-inter font-semibold text-obsidian py-4 pl-4 w-28">Enterprise</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {comparisonFeatures.map((feat, i) => (
+                        <tr key={i} className="border-b border-obsidian/5">
+                            <td className="font-inter text-slate/80 py-3.5 pr-4">{feat.name}</td>
+                            <td className="text-center py-3.5 px-4">
+                                {feat.community ? <Check /> : <Dash />}
+                            </td>
+                            <td className="text-center py-3.5 px-4">
+                                {feat.performance ? <Check /> : <Dash />}
+                            </td>
+                            <td className="text-center py-3.5 pl-4">
+                                {feat.enterprise ? <Check /> : <Dash />}
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
+function Check() {
+    return (
+        <svg className="w-5 h-5 text-champagne mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+    );
+}
+
+function Dash() {
+    return <span className="block w-4 h-px bg-obsidian/15 mx-auto" />;
 }
 
 const faqs = [
