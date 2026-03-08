@@ -44,6 +44,7 @@ const testimonials = [
 
 export default function Testimonials() {
     const [current, setCurrent] = useState(0);
+    const currentRef = useRef(0);
     const comp = useRef(null);
     const trackRef = useRef(null);
     const firstCardRef = useRef(null);
@@ -58,13 +59,13 @@ export default function Testimonials() {
 
     const slideTo = useCallback((index) => {
         const clamped = Math.max(0, Math.min(index, testimonials.length - 1));
+        currentRef.current = clamped;
         setCurrent(clamped);
         gsap.to(trackRef.current, {
             x: -(clamped * getCardStep()),
             duration: 0.65,
             ease: 'power3.out',
         });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useLayoutEffect(() => {
@@ -105,9 +106,10 @@ export default function Testimonials() {
         if (!isDragging.current) return;
         isDragging.current = false;
         const delta = e.clientX - dragStartX.current;
-        if (delta < -60) slideTo(current + 1);
-        else if (delta > 60) slideTo(current - 1);
-        else slideTo(current);
+        const cur = currentRef.current;
+        if (delta < -60) slideTo(cur + 1);
+        else if (delta > 60) slideTo(cur - 1);
+        else slideTo(cur);
     };
 
     const onTouchStart = (e) => {
@@ -122,9 +124,10 @@ export default function Testimonials() {
 
     const onTouchEnd = (e) => {
         const delta = e.changedTouches[0].clientX - dragStartX.current;
-        if (delta < -50) slideTo(current + 1);
-        else if (delta > 50) slideTo(current - 1);
-        else slideTo(current);
+        const cur = currentRef.current;
+        if (delta < -50) slideTo(cur + 1);
+        else if (delta > 50) slideTo(cur - 1);
+        else slideTo(cur);
     };
 
     return (

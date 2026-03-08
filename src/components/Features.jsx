@@ -12,10 +12,11 @@ const diagnosticItems = [
   "Message: Portfolio Review",
 ];
 
-function CardShuffler() {
+function CardShuffler({ isVisible }) {
   const [items, setItems] = useState([0, 1, 2]);
 
   useEffect(() => {
+    if (!isVisible) return;
     const interval = setInterval(() => {
       setItems((prev) => {
         const next = [...prev];
@@ -24,7 +25,7 @@ function CardShuffler() {
       });
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isVisible]);
 
   return (
     <div className="relative h-48 w-full flex items-center justify-center mt-6">
@@ -67,12 +68,13 @@ const typeMessages = [
   "> Optimizing portfolio output.",
 ];
 
-function CardTypewriter() {
+function CardTypewriter({ isVisible }) {
   const [text, setText] = useState("");
   const [msgIndex, setMsgIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
 
   useEffect(() => {
+    if (!isVisible) return;
     let timeout;
     const currentMsg = typeMessages[msgIndex];
     if (charIndex < currentMsg.length) {
@@ -91,7 +93,7 @@ function CardTypewriter() {
       }, 2500);
     }
     return () => clearTimeout(timeout);
-  }, [charIndex, msgIndex]);
+  }, [charIndex, msgIndex, isVisible]);
 
   return (
     <div className="w-full mt-6 bg-obsidian border border-white/10 rounded-xl p-4 h-48 flex flex-col">
@@ -110,16 +112,18 @@ function CardTypewriter() {
 }
 
 // --- Card 3: Cursor Protocol Scheduler ---
-function CardScheduler() {
+function CardScheduler({ isVisible }) {
   const containerRef = useRef(null);
   const cursorRef = useRef(null);
   const dayRefs = useRef([]);
   const saveBtnRef = useRef(null);
+  const tlRef = useRef(null);
   const days = ["S", "M", "T", "W", "T", "F", "S"];
 
   useEffect(() => {
     let ctx = gsap.context(() => {
       const tl = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+      tlRef.current = tl;
 
       // Target Wednesday (index 3)
       const targetDay = dayRefs.current[3];
@@ -169,6 +173,12 @@ function CardScheduler() {
     return () => ctx.revert();
   }, []);
 
+  useEffect(() => {
+    if (!tlRef.current) return;
+    if (isVisible) tlRef.current.play();
+    else tlRef.current.pause();
+  }, [isVisible]);
+
   return (
     <div
       ref={containerRef}
@@ -214,6 +224,18 @@ function CardScheduler() {
 // --- Main Section ---
 export default function Features() {
   const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
@@ -260,7 +282,7 @@ export default function Features() {
                 opportunities.
               </p>
             </div>
-            <CardShuffler />
+            <CardShuffler isVisible={isVisible} />
           </div>
 
           {/* Card 2 */}
@@ -274,7 +296,7 @@ export default function Features() {
                 material.
               </p>
             </div>
-            <CardTypewriter />
+            <CardTypewriter isVisible={isVisible} />
           </div>
 
           {/* Card 3 */}
@@ -288,7 +310,7 @@ export default function Features() {
                 grow together.
               </p>
             </div>
-            <CardScheduler />
+            <CardScheduler isVisible={isVisible} />
           </div>
         </div>
       </div>

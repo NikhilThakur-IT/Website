@@ -27,9 +27,9 @@
 - **Details:** Unknown routes show a blank page. Add `<Route path="*" element={<NotFound />} />`.
 
 ### Task 2: Fix stale closure bug in Testimonials carousel
-- **Status:** [ ] Pending
-- **File:** `Testimonials.jsx:67`
-- **Details:** `slideTo` has empty `[]` deps in `useCallback` but reads `current` via closure. Dragging can produce wrong slide indices. Add `current` to dependency array.
+- **Status:** [x] Done
+- **File:** `Testimonials.jsx:59-68`
+- **Details:** Drag handlers read stale `current` from closure during rapid interactions. Fixed by adding `currentRef` that `slideTo` keeps in sync, and reading from `currentRef.current` in `onMouseUp`/`onTouchEnd` handlers.
 
 ### Task 3: Self-host critical images
 - **Status:** [x] Done (c066cdf)
@@ -124,9 +124,9 @@
 - **Details:** Render-blocking font stylesheet loading 3 families. Consider self-hosting fonts, using `<link rel="preload" as="style">` with onload swap, or using `font-display: optional`.
 
 ### Task 21: Pause off-screen animations
-- **Status:** [ ] Pending
-- **File:** `Features.jsx:18-27,76-95,122-170`
-- **Details:** `setInterval` (CardShuffler), `setTimeout` chain (CardTypewriter), and `repeat: -1` GSAP timeline (CardScheduler) all run continuously even off-screen. Use IntersectionObserver or ScrollTrigger `toggleActions` to pause when not in viewport.
+- **Status:** [x] Done
+- **File:** `Features.jsx`
+- **Details:** Added IntersectionObserver on the Features section to track visibility. CardShuffler and CardTypewriter skip their interval/timeout when `isVisible` is false. CardScheduler pauses/resumes its GSAP timeline based on visibility.
 
 ### Task 22: Add lazy loading for secondary routes
 - **Status:** [ ] Pending
