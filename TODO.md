@@ -1,5 +1,5 @@
 # Website Audit To-Do List
-*Updated: 2026-03-05 | Full audit v2*
+*Updated: 2026-03-08 | Full audit v2*
 
 ## Priority Legend
 - CRITICAL = Bugs, broken functionality, security risk
@@ -22,27 +22,27 @@
 ## CRITICAL
 
 ### Task 1: Add 404 catch-all route
-- **Status:** [x] Done
+- **Status:** [x] Done (c066cdf)
 - **File:** `App.jsx:33-38`
 - **Details:** Unknown routes show a blank page. Add `<Route path="*" element={<NotFound />} />`.
 
 ### Task 2: Fix stale closure bug in Testimonials carousel
-- **Status:** [x] Done
+- **Status:** [ ] Pending
 - **File:** `Testimonials.jsx:67`
 - **Details:** `slideTo` has empty `[]` deps in `useCallback` but reads `current` via closure. Dragging can produce wrong slide indices. Add `current` to dependency array.
 
 ### Task 3: Self-host critical images
-- **Status:** [x] Done
+- **Status:** [x] Done (c066cdf)
 - **Files:** `Hero.jsx:36,71-85`, `Philosophy.jsx:47`, `FormPage.jsx:188`
 - **Details:** Hero background, 5 avatars (randomuser.me), philosophy background, and form background all depend on external URLs. Download and place in `public/images/`. If Unsplash or randomuser.me is slow/down, the site looks broken.
 
 ### Task 4: Self-host OG/Twitter social image
-- **Status:** [x] Done
+- **Status:** [x] Done (c066cdf)
 - **File:** `index.html:13,18`
 - **Details:** OG and Twitter card images point to external Unsplash URL. Social previews break if URL changes. Save to `public/og-image.jpg`.
 
 ### Task 5: Add `.env` to .gitignore
-- **Status:** [x] Done
+- **Status:** [x] Done (c066cdf)
 - **File:** `.gitignore`
 - **Details:** Add `.env`, `.env.*`, `.env.local`, `.env.production` patterns. Currently only `*.local` is covered.
 
@@ -51,17 +51,17 @@
 ## HIGH — Security
 
 ### Task 6: Harden CSP in vercel.json
-- **Status:** [x] Done
+- **Status:** [x] Done (53824bc)
 - **File:** `vercel.json:9`
 - **Details:** Add missing directives: `base-uri 'self'`, `form-action 'self' https://formspree.io`, `object-src 'none'`, `upgrade-insecure-requests`. Evaluate removing `unsafe-inline` for scripts (may need Vite CSP nonce plugin).
 
 ### Task 7: Fix deprecated X-XSS-Protection header
-- **Status:** [x] Done
+- **Status:** [x] Done (53824bc)
 - **File:** `vercel.json:25`
 - **Details:** Set to `0` or remove. The `1; mode=block` value is a no-op in modern browsers and can cause issues in old IE.
 
 ### Task 8: Fix Cal.com script injection issues
-- **Status:** [x] Done
+- **Status:** [x] Done (53824bc)
 - **File:** `BookCall.jsx:15-46`
 - **Details:** Script re-injects on every mount (React StrictMode). No dedup check, no cleanup on unmount, no `integrity`/`crossorigin` attributes. Add script-already-loaded guard and cleanup function.
 
@@ -69,20 +69,10 @@
 
 ## HIGH — Accessibility
 
-### Task 9: Add skip-to-content link
-- **Status:** [ ] Pending
-- **File:** `App.jsx` or `Navbar.jsx`
-- **Details:** Add visually-hidden "Skip to main content" link at top of page for keyboard/screen reader users.
-
 ### Task 10: Add `<main>` landmark to all pages
-- **Status:** [x] Done
+- **Status:** [x] Done (53824bc)
 - **Files:** `App.jsx:17`, `FormPage.jsx`, `PrivacyPage.jsx`, `TermsPage.jsx`
 - **Details:** Wrap page content in `<main>` element. Assistive tech currently can't identify the main content region.
-
-### Task 11: Add `prefers-reduced-motion` support
-- **Status:** [ ] Pending
-- **Files:** All GSAP components, `index.css`
-- **Details:** Check `window.matchMedia('(prefers-reduced-motion: reduce)')` in every GSAP context and skip/simplify animations. Add CSS `@media (prefers-reduced-motion: reduce)` to disable `.btn-magnetic` transitions. WCAG 2.3.3.
 
 ### Task 12: Add `:focus-visible` styles
 - **Status:** [ ] Pending
@@ -153,22 +143,22 @@
 ## MEDIUM — Bugs & Code Quality
 
 ### Task 24: Fix useEffect → useLayoutEffect for GSAP
-- **Status:** [x] Done
+- **Status:** [x] Done (b92001c)
 - **Files:** `Features.jsx:218`, `Philosophy.jsx:10`
 - **Details:** CLAUDE.md mandates `useLayoutEffect` for all GSAP animations. `useEffect` causes flash of unanimated content.
 
 ### Task 25: Remove dead code in Features.jsx
-- **Status:** [x] Done
+- **Status:** [x] Done (53824bc)
 - **File:** `Features.jsx:4,32`
 - **Details:** `CircleDashed` imported but never used (line 4). `_isTop` variable declared but never used (line 32).
 
 ### Task 26: Fix fake "Commit Time" button
-- **Status:** [x] Done
+- **Status:** [x] Done (53824bc)
 - **File:** `Features.jsx:198`
 - **Details:** Looks interactive but does nothing. Change to `<span>` or add `aria-hidden="true"` and `tabindex="-1"`.
 
 ### Task 27: Fix dead Tailwind v2 class
-- **Status:** [x] Done
+- **Status:** [x] Done (53824bc)
 - **File:** `Pricing.jsx:67`
 - **Details:** `border-opacity-10` was removed in Tailwind v3. Border has no opacity effect. Use `border-obsidian/10` instead.
 
@@ -178,7 +168,7 @@
 - **Details:** `cn()` (clsx + tailwind-merge) is exported from a UI component. Creates architectural coupling. Move to `src/lib/utils.js`.
 
 ### Task 29: Remove dead SVG filter in index.html
-- **Status:** [x] Done
+- **Status:** [x] Done (c066cdf)
 - **File:** `index.html:31-35`
 - **Details:** `<filter id="noiseFilter">` is never referenced. Only the `data:` URI noise overlay works. Remove the dead SVG.
 
@@ -188,7 +178,7 @@
 - **Details:** Overwrites Tailwind's built-in `slate` color scale. `bg-slate-500` etc. are broken. Rename to `graphite` or `charcoal`.
 
 ### Task 31: Update CLAUDE.md component order
-- **Status:** [ ] Pending
+- **Status:** [x] Done (b92001c)
 - **File:** `CLAUDE.md`
 - **Details:** Currently lists `Navbar > Hero > Features > Philosophy > Protocol > Pricing > Footer`. Actual order is `Navbar > Hero > Testimonials > Features > Philosophy > BookCall > Pricing > Footer`.
 
@@ -217,22 +207,22 @@
 ## MEDIUM — UX
 
 ### Task 36: Add Cal.com fallback link
-- **Status:** [x] Done
+- **Status:** [x] Done (a6377df)
 - **File:** `BookCall.jsx:96-103`
 - **Details:** If embed script fails (ad blocker, network), button does nothing silently. Add fallback `<a href="https://cal.com/nik-thakur">` that opens when Cal.com isn't loaded.
 
 ### Task 37: Fix mobile menu UX (escape key + click outside)
-- **Status:** [x] Done
+- **Status:** [x] Done (a6377df)
 - **File:** `Navbar.jsx`
 - **Details:** No escape key handler. Clicking outside doesn't close. Standard mobile UX expectations.
 
 ### Task 38: Show "Get Free Access Today" on mobile
-- **Status:** [x] Done
+- **Status:** [x] Done (a6377df)
 - **File:** `Hero.jsx:63`
 - **Details:** `hidden md:inline-block` hides this value prop text from mobile users.
 
 ### Task 39: Add touch-follow feedback to Testimonials
-- **Status:** [x] Done
+- **Status:** [x] Done (a6377df)
 - **File:** `Testimonials.jsx:169`
 - **Details:** Touch users see no movement until release. No visual peek of next card. Consider adding real-time drag follow on `onTouchMove`.
 
@@ -300,7 +290,7 @@
 ## Conversion & Content (from v1 audit, still pending)
 
 ### Task 51: Create pricing comparison table with "Most Popular" badge
-- **Status:** [x] Done
+- **Status:** [x] Done (b92001c, 9db3b51)
 - **File:** `Pricing.jsx`
 - **Details:** Add feature comparison matrix across tiers. Add "Most Popular" badge. Clarify "$2,000/workshop" pricing.
 
@@ -310,7 +300,7 @@
 - **Details:** Both sections have zero CTAs — missed conversion points after trust-building content.
 
 ### Task 53: Improve form success message with next steps
-- **Status:** [x] Done (already implemented)
+- **Status:** [ ] Pending
 - **File:** `FormPage.jsx:104-122`
 - **Details:** Add expected response timeline, confirmation email mention, and what to expect next.
 

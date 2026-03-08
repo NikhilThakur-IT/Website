@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add .gitignore src/components/Footer.jsx src/components/Hero.jsx)",
+      "Bash(git commit:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ./plugins/security-guidance/index.js"
+          }
+        ]
+      }
+    ]
+  }
+}
