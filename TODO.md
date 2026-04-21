@@ -28,14 +28,14 @@
 - **Details:** `script-src` is now hardened, but `style-src 'unsafe-inline'` is still required because the app uses inline `style` attributes and a global inline noise overlay. Move static inline styles to CSS classes/CSS variables where practical, then replace `style-src 'unsafe-inline'` with nonces or hashes.
 
 ### Task 56: Add server-side anti-spam/rate limiting for form submissions
-- **Status:** [ ] Pending
-- **File:** `FormPage.jsx:47-63`
-- **Details:** Current rate limiting is localStorage-based, client-side, and fails open. Attackers can bypass it by clearing storage, using another browser, or posting directly to Formspree. Add server-side protection through Formspree settings, Cloudflare Turnstile/reCAPTCHA, or a small backend/proxy with IP-based throttling.
+- **Status:** [x] Done (2026-04-21)
+- **Files:** `src/components/FormPage.jsx`, `api/contact.js`, `vercel.json`
+- **Details:** Form submissions now post to `/api/contact`, which enforces a server-side honeypot, IP-based throttling, allowlisted option values, and server validation before forwarding accepted submissions to Formspree. The browser CSP no longer needs direct `connect-src` or `form-action` access to Formspree.
 
 ### Task 57: Add form field length limits before posting to Formspree
-- **Status:** [ ] Pending
+- **Status:** [x] Done (2026-04-21)
 - **File:** `FormPage.jsx:65-76`
-- **Details:** Name, email, and message are validated only for presence/basic email shape. Add `maxLength` attributes and validation caps, especially for `message`, to reduce spam payload size and accidental oversized submissions.
+- **Details:** Added shared client-side caps for name, email, and message, plus matching `maxLength` attributes and server-side payload caps in `api/contact.js`.
 
 ### Task 58: Add privacy/consent disclosure near embedded third parties
 - **Status:** [ ] Pending
@@ -67,9 +67,9 @@
 ## MEDIUM - Bugs Found During Security Audit
 
 ### Task 63: Fix mojibake/encoding corruption in user-facing copy
-- **Status:** [ ] Pending
+- **Status:** [x] Done (2026-04-21)
 - **Files:** `src/components/FormPage.jsx`, `src/components/Hero.jsx`, `src/components/Features.jsx`, `src/components/Pricing.jsx`, `src/components/Testimonials.jsx`, `TODO.md`
-- **Details:** Several characters render as `â€”`, `â€¦`, `â€™`, `Â·`, and `â˜…`. This is not a security issue, but it damages trust and polish on a public site. Replace corrupted sequences with valid UTF-8 punctuation or ASCII equivalents.
+- **Details:** Verified user-facing source copy uses valid UTF-8 punctuation and found no committed mojibake sequences in `src`. The visible corruption was from the PowerShell console decoding, not the files themselves.
 
 ### Task 64: Keep ESLint Node globals for plugin files
 - **Status:** [x] Done (2026-04-21)
