@@ -58,9 +58,9 @@
 - **Details:** Security-sensitive deployments should avoid stale HTML while allowing immutable caching for hashed JS/CSS. Add `Cache-Control: no-cache` for HTML/app shell and `public, max-age=31536000, immutable` for hashed assets.
 
 ### Task 62: Add automated security checks to CI
-- **Status:** [ ] Pending
+- **Status:** [x] Done (2026-04-21)
 - **Files:** `package.json`, GitHub/Vercel CI config
-- **Details:** Local checks passed, but there is no visible CI gate. Add `npm audit --audit-level=low`, `npm run lint`, and `npm run build` to deployment checks so regressions are caught before release.
+- **Details:** Added a reusable `npm run verify` gate that runs `npm audit --audit-level=low`, `npm run lint`, and `npm run build`. Vercel now uses it as the build command, and GitHub Actions runs it on pushes to `main` and pull requests.
 
 ---
 
