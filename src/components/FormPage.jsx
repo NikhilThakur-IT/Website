@@ -2,9 +2,12 @@ import React, { useState, useRef, useLayoutEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 
-// ─── Formspree ────────────────────────────────────────────────────────────────
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/mzdaogwo";
-// ─────────────────────────────────────────────────────────────────────────────
+const CONTACT_ENDPOINT = "/api/contact";
+const FIELD_LIMITS = {
+  name: 80,
+  email: 254,
+  message: 1500,
+};
 
 const INTEREST_OPTIONS = [
   { value: "waitlist", label: "Join the Performance Workshop waitlist" },
@@ -44,38 +47,33 @@ const GOAL_OPTIONS = {
   ],
 };
 
-// Rate limiting: max 3 submissions per hour stored in localStorage
-const RATE_LIMIT_KEY = "oai_form_submissions";
-const RATE_LIMIT_MAX = 3;
-const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
-
-function checkRateLimit() {
-  try {
-    const raw = localStorage.getItem(RATE_LIMIT_KEY);
-    const timestamps = raw ? JSON.parse(raw) : [];
-    const now = Date.now();
-    const recent = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
-    if (recent.length >= RATE_LIMIT_MAX) return false;
-    recent.push(now);
-    localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(recent));
-    return true;
-  } catch {
-    return true; // fail open if localStorage is unavailable
-  }
-}
-
 function validateForm(form) {
   const errors = {};
-  if (!form.name.trim() || form.name.trim().length < 2) {
+  const name = form.name.trim();
+  const email = form.email.trim();
+  const message = form.message.trim();
+
+  if (!name || name.length < 2) {
     errors.name = "Please enter your full name.";
+  } else if (name.length > FIELD_LIMITS.name) {
+    errors.name = `Name must be ${FIELD_LIMITS.name} characters or fewer.`;
   }
+
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!form.email.trim() || !emailRe.test(form.email.trim())) {
+  if (!email || !emailRe.test(email)) {
     errors.email = "Please enter a valid email address.";
+  } else if (email.length > FIELD_LIMITS.email) {
+    errors.email = `Email must be ${FIELD_LIMITS.email} characters or fewer.`;
   }
+
   if (!form.goal) {
     errors.goal = "Please select an option.";
   }
+
+  if (message.length > FIELD_LIMITS.message) {
+    errors.message = `Message must be ${FIELD_LIMITS.message} characters or fewer.`;
+  }
+
   return errors;
 }
 
@@ -140,34 +138,33 @@ export default function FormPage() {
       return;
     }
 
-    // Rate limit check
-    if (!checkRateLimit()) {
-      setStatus("ratelimit");
-      return;
-    }
-
     setStatus("loading");
 
     try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
+      const res = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
         body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          interest: INTEREST_OPTIONS.find((o) => o.value === form.interest)
-            ?.label,
-          goal: GOAL_OPTIONS[form.interest]?.find((o) => o.value === form.goal)
-            ?.label,
-          message: form.message,
+          name: form.name.trim(),
+          email: form.email.trim(),
+          interest: form.interest,
+          goal: form.goal,
+          message: form.message.trim(),
+          website: form.website,
         }),
       });
 
       if (res.ok) {
         setStatus("success");
+      } else if (res.status === 429) {
+        setStatus("ratelimit");
+      } else if (res.status === 400) {
+        const data = await res.json().catch(() => ({}));
+        setErrors(data.errors || {});
+        setStatus("idle");
       } else {
         setStatus("error");
       }
@@ -388,6 +385,7 @@ export default function FormPage() {
                     name="name"
                     value={form.name}
                     onChange={handleChange}
+                    maxLength={FIELD_LIMITS.name}
                     placeholder=""
                     className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${
                       errors.name
@@ -413,6 +411,7 @@ export default function FormPage() {
                     name="email"
                     value={form.email}
                     onChange={handleChange}
+                    maxLength={FIELD_LIMITS.email}
                     placeholder=""
                     className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none transition-colors ${
                       errors.email
@@ -485,14 +484,29 @@ export default function FormPage() {
                     name="message"
                     value={form.message}
                     onChange={handleChange}
+                    maxLength={FIELD_LIMITS.message}
                     rows={3}
                     placeholder={
                       isWaitlist
                         ? "Where are you now, and what does success look like in 6 months?"
                         : "Team size, current tools, and what success looks like for you…"
                     }
-                    className="w-full bg-white border border-white/20 rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none focus:border-champagne transition-colors resize-none"
+                    className={`w-full bg-white border rounded-xl px-5 py-4 font-inter text-sm text-obsidian placeholder:text-obsidian/50 focus:outline-none focus:border-champagne transition-colors resize-none ${
+                      errors.message ? "border-red-400" : "border-white/20"
+                    }`}
                   />
+                  <div className="mt-1.5 flex items-center justify-between gap-3">
+                    {errors.message ? (
+                      <p className="font-mono text-xs text-red-400/80">
+                        {errors.message}
+                      </p>
+                    ) : (
+                      <span aria-hidden="true" />
+                    )}
+                    <p className="font-mono text-[10px] text-ivory/45">
+                      {form.message.length}/{FIELD_LIMITS.message}
+                    </p>
+                  </div>
                 </div>
 
                 {/* Status messages */}
