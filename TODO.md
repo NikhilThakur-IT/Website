@@ -1,11 +1,80 @@
 # Website Audit To-Do List
-*Updated: 2026-03-08 | Full audit v2*
+*Updated: 2026-04-21 | Security audit v3*
 
 ## Priority Legend
 - CRITICAL = Bugs, broken functionality, security risk
 - HIGH = Significant UX/a11y/perf/security impact
 - MEDIUM = Code quality, polish, best practices
 - LOW = Nice-to-have, future-proofing
+
+---
+
+## Security Testing Summary (2026-04-21)
+- [x] `npm audit --audit-level=low` passed with 0 known dependency vulnerabilities.
+- [x] `npm run build` passed after rerunning outside the sandbox because esbuild was blocked by `spawn EPERM`.
+- [x] Secret scan found no committed credentials outside the local security-guidance rule definitions.
+- [x] React XSS sink scan found no `dangerouslySetInnerHTML`, direct `.innerHTML =`, `eval()`, or `new Function()` usage in `src`.
+- [x] CSP was tightened by removing `script-src 'unsafe-inline'` and adding `frame-ancestors 'self'`.
+- [x] Removed unused `randomuser.me` preconnect after images were self-hosted.
+- [x] Fixed ESLint environment coverage for `plugins/**/*.js`; lint now passes.
+
+---
+
+## HIGH - Security Audit Findings
+
+### Task 55: Move remaining inline styles out of JSX/HTML so CSP can remove `style-src 'unsafe-inline'`
+- **Status:** [ ] Pending
+- **Files:** `index.html:30`, `Hero.jsx:36`, `FormPage.jsx:189`, `BookCall.jsx:89`, animation/card style props across `Features.jsx` and `Testimonials.jsx`
+- **Details:** `script-src` is now hardened, but `style-src 'unsafe-inline'` is still required because the app uses inline `style` attributes and a global inline noise overlay. Move static inline styles to CSS classes/CSS variables where practical, then replace `style-src 'unsafe-inline'` with nonces or hashes.
+
+### Task 56: Add server-side anti-spam/rate limiting for form submissions
+- **Status:** [ ] Pending
+- **File:** `FormPage.jsx:47-63`
+- **Details:** Current rate limiting is localStorage-based, client-side, and fails open. Attackers can bypass it by clearing storage, using another browser, or posting directly to Formspree. Add server-side protection through Formspree settings, Cloudflare Turnstile/reCAPTCHA, or a small backend/proxy with IP-based throttling.
+
+### Task 57: Add form field length limits before posting to Formspree
+- **Status:** [ ] Pending
+- **File:** `FormPage.jsx:65-76`
+- **Details:** Name, email, and message are validated only for presence/basic email shape. Add `maxLength` attributes and validation caps, especially for `message`, to reduce spam payload size and accidental oversized submissions.
+
+### Task 58: Add privacy/consent disclosure near embedded third parties
+- **Status:** [ ] Pending
+- **Files:** `BookCall.jsx`, `FormPage.jsx`, `PrivacyPage.jsx:37-39`
+- **Details:** The site sends user data to Formspree and loads Cal.com. The privacy page mentions them, but the form and booking areas do not provide an inline notice before submission/booking. Add short copy linking to Privacy, and update the privacy policy with retention, cookies/tracking, and data processor details.
+
+### Task 59: Consider self-hosting fonts to reduce third-party request exposure
+- **Status:** [ ] Pending
+- **File:** `index.html:23`
+- **Details:** Google Fonts creates third-party requests on page load. Self-hosting fonts improves privacy, reliability, and makes CSP easier to tighten.
+
+### Task 60: Review Cal.com embed supply-chain risk
+- **Status:** [ ] Pending
+- **File:** `BookCall.jsx:36-57`
+- **Details:** The app dynamically loads `https://app.cal.com/embed/embed.js`. This is normal for an embed, but Subresource Integrity is not practical unless Cal publishes stable versioned assets. Document the accepted risk, pin a version if Cal supports it, or prefer the fallback outbound link for stricter CSP deployments.
+
+### Task 61: Add explicit cache headers for HTML vs hashed static assets
+- **Status:** [ ] Pending
+- **File:** `vercel.json`
+- **Details:** Security-sensitive deployments should avoid stale HTML while allowing immutable caching for hashed JS/CSS. Add `Cache-Control: no-cache` for HTML/app shell and `public, max-age=31536000, immutable` for hashed assets.
+
+### Task 62: Add automated security checks to CI
+- **Status:** [ ] Pending
+- **Files:** `package.json`, GitHub/Vercel CI config
+- **Details:** Local checks passed, but there is no visible CI gate. Add `npm audit --audit-level=low`, `npm run lint`, and `npm run build` to deployment checks so regressions are caught before release.
+
+---
+
+## MEDIUM - Bugs Found During Security Audit
+
+### Task 63: Fix mojibake/encoding corruption in user-facing copy
+- **Status:** [ ] Pending
+- **Files:** `src/components/FormPage.jsx`, `src/components/Hero.jsx`, `src/components/Features.jsx`, `src/components/Pricing.jsx`, `src/components/Testimonials.jsx`, `TODO.md`
+- **Details:** Several characters render as `â€”`, `â€¦`, `â€™`, `Â·`, and `â˜…`. This is not a security issue, but it damages trust and polish on a public site. Replace corrupted sequences with valid UTF-8 punctuation or ASCII equivalents.
+
+### Task 64: Keep ESLint Node globals for plugin files
+- **Status:** [x] Done (2026-04-21)
+- **File:** `eslint.config.js`
+- **Details:** `npm run lint` failed because `plugins/security-guidance/index.js` uses Node's `process`, while ESLint only configured browser globals. Added a `plugins/**/*.js` override with Node globals.
 
 ---
 
